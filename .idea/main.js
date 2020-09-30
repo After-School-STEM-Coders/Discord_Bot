@@ -5,6 +5,27 @@ const client = new Discord.Client();
 /// prefix of commands feel free to change this
 const prefix = '+'
 
+//requiring path and fs modules
+const path = require('path');
+const fs = require('fs');
+//joining path of directory
+const directoryPath = path.join('./Commands/', '/Discord_Bot/Commands');
+//passsing directoryPath and callback function
+fs.readdir(directoryPath, function (err, files) {
+    //handling error
+    if (err) {
+        return console.log('Unable to scan directory: ' + err);
+    }
+    //listing all files using forEach
+    files.forEach(function (file) {
+        // Do whatever you want to do with the file
+        console.log(file);
+    });
+});
+
+
+
+
 
 client.once('ready' , () => {
     console.log('Jarvis is Online!');
@@ -21,7 +42,7 @@ client.on('message', message =>{
     if(command === 'ping'){
         message.channel.send('pong!');
     }else if (command == 'faq' || command == 'FAQ'){
-        message.channel.send("")
+        message.channel.send("To be or not to be that is the question, we should strive for the benefit of mankind")
     }
 });
 
