@@ -25,9 +25,8 @@ jobs:
         
         script: |
           touch ~/Step1.txt
-          if pgrep -f Discord_Bot; then kill $(pgrep -f Discord_Bot); fi
           touch ~/Step2.txt
           export NARVIS=${{ secrets.NARVIS }}
           touch ~/Step3.txt
-          node ~/Discord_Bot/main.js &
+          node ~/Discord_Bot/main.js
           touch ~/Step4.txt
