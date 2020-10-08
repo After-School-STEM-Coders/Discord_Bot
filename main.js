@@ -12,7 +12,7 @@ const path = require('path');
 client.commands = new Discord.Collection();
 
 //joining path of directory
-const directoryPath = path.join('./Commands/');
+const directoryPath = path.join('./commands/');
 //passsing directoryPath and callback function
 fs.readdir(directoryPath, function (err, files) {
     //handling error
