@@ -26,11 +26,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="497e332c-baa7-45f3-aae7-27de2c058edc" name="Default Changelist" comment="changed structure">
-      <change afterPath="$PROJECT_DIR$/commands/welcome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/rules.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/rules.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-    </list>
+    <list default="true" id="497e332c-baa7-45f3-aae7-27de2c058edc" name="Default Changelist" comment="implimented the welcome to server code from Braian's bot. needs testign to see if it worked" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,6 +77,14 @@
     </recent_temporary>
   </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="implimented the welcome to server code from Braian's bot. needs testign to see if it worked">
+      <created>1602152891429</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1602152891429</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -94,6 +98,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="implimented the welcome to server code from Braian's bot. needs testign to see if it worked" />
+    <option name="LAST_COMMIT_MESSAGE" value="implimented the welcome to server code from Braian's bot. needs testign to see if it worked" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1290" y="177" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602145370239">
