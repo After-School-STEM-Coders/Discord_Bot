@@ -1,41 +1,34 @@
-const Discord = require('discord.js');
-const fs = require('fs');
+const Discord = require('discord.js')
 
 module.exports = {
-    name: 'exp',
-    description: 'this shows experience!',
-    execute(message, args){
+  name: 'exp',
+  description: 'this shows experience!',
+  execute (message, args) {
+    const image = message.author.avatarURL()
+    const userName = message.author.username
 
-        const image = message.author.avatarURL();
-        const userName = message.author.username;
+    const experience = 290
+    const level = Math.floor(Math.log2(experience / 100))
+    const currentLevelExperience = Math.pow(2, level) * 100
+    const playerLevelExperience = (experience - currentLevelExperience)
+    const barPercentage = playerLevelExperience / (currentLevelExperience * 2)
+    const numSquares = Math.floor(20 * barPercentage)
 
-        let experience = 290;
-        let level = Math.floor( Math.log2(experience/100) );
-        let currentLevelExperience = Math.pow(2, level) * 100;
-        let playerLevelExperience = (experience - currentLevelExperience);
-        let barPercentage =  playerLevelExperience / (currentLevelExperience * 2);
-        let numSquares = Math.floor(20 * barPercentage);
+    let bar = ''
 
-        let bar = "";
-
-        for (let i = 0; i < 20; i++)
-        {
-            if(i < numSquares) {
-                bar += "🟩";
-            }
-            else{
-                bar += "⬜";
-            }
-        }
-
-        const embed = new Discord.MessageEmbed()
-        .setAuthor(userName + " - Level " + level, image)
-        .setColor(0x0000ff)
-        .addField(`${playerLevelExperience} / ${currentLevelExperience * 2} xp`, bar);
-        
-    
-        message.channel.send(embed);
-
-
+    for (let i = 0; i < 20; i++) {
+      if (i < numSquares) {
+        bar += '🟩'
+      } else {
+        bar += '⬜'
+      }
     }
+
+    const embed = new Discord.MessageEmbed()
+      .setAuthor(userName + ' - Level ' + level, image)
+      .setColor(0x0000ff)
+      .addField(`${playerLevelExperience} / ${currentLevelExperience * 2} xp`, bar)
+
+    message.channel.send(embed)
+  }
 }
