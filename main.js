@@ -11,31 +11,26 @@ const path = require('path')
 
 client.commands = new Discord.Collection()
 
-//joining path of directory
+// joining path of directory
 
 const directoryPath = path.join(__dirname, 'commands')
 // passing directoryPath and callback function
 fs.readdir(directoryPath, function (err, files) {
 // handling error
-if (err) {
-  return console.log('Unable to scan directory: ' + err)
-}
+  if (err) {
+    return console.log('Unable to scan directory: ' + err)
+  }
 // listing all files using forEach
-files.forEach(function (file) {
-  // Do whatever you want to do with the file
-  const command = require(`./commands/${file}`)
-  client.commands.set(command.name, command)
-
-  console.log(file)
+  files.forEach(function (file) {
+    // Do whatever you want to do with the file
+    const command = require(`./commands/${file}`)
+    client.commands.set(command.name, command)
+    console.log(file)
+  })
 })
-})
-;
-
 
 client.once('ready', () => {
   console.log('Jarvis is Online!')
-
-
 })
 
 client.on('message', message => {
@@ -44,14 +39,11 @@ client.on('message', message => {
   const args = message.content.slice(prefix.length).split(/ +/)
   const command = args.shift().toLowerCase()
 
-
   // Command block begins here
   client.commands.some(function (cmd) {
-
-    if (command == cmd.name) {
+    if (command === cmd.name) {
       cmd.execute(message)
       return true;
-
     }
   })
 })
@@ -64,16 +56,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
   // Get rules channel and message information for rules interaction
   fs.readFile(__dirname + '/data/rules.txt', 'utf8', function (err, data) {
-
     info = data.split('\n')
-
-    if (reaction.message.channel == info[0] && reaction.message.id == info[1] && reaction.emoji.name == "👍") {
+    if (reaction.message.channel === info[0] && reaction.message.id === info[1] && reaction.emoji.name === "👍") {
       reaction.message.channel.send(`Thank you for reacting, ${user}`)
     }
-
-
   })
-
 })
 
 const bot_token = process.env.NARVIS
