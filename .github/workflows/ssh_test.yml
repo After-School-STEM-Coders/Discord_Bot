@@ -24,10 +24,10 @@ jobs:
         key: ${{ secrets.KEY }}
         
         script: |
-          touch ~/FirstStep.txt
-          touch /home/ubuntu/FirstStep2.txt
+          touch ~/Step1.txt
           if pgrep -f Discord_Bot; then kill $(pgrep -f Discord_Bot); fi
+          touch ~/Step2.txt
           export NARVIS=${{ secrets.NARVIS }}
+          touch ~/Step3.txt
           node ~/Discord_Bot/main.js &
-          touch ~/SecondStep.txt
-          touch /home/ubuntu/SecondStep2.txt
+          touch ~/Step4.txt
