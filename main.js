@@ -12,7 +12,8 @@ const path = require('path');
 client.commands = new Discord.Collection();
 
 //joining path of directory
-const directoryPath = path.join('./commands/');
+
+const directoryPath = path.join(__dirname, 'commands');
 //passsing directoryPath and callback function
 fs.readdir(directoryPath, function (err, files) {
     //handling error
@@ -22,7 +23,7 @@ fs.readdir(directoryPath, function (err, files) {
     //listing all files using forEach
     files.forEach(function (file) {
         // Do whatever you want to do with the file
-        const command = require(`./Commands/${file}`);
+        const command = require(`./commands/${file}`);
         client.commands.set(command.name, command);
 
         console.log(file);
