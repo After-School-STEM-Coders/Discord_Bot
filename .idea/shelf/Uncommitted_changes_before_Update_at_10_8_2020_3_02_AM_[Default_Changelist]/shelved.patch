@@ -1,0 +1,254 @@
+Index: main.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const Discord = require('discord.js');\r\n\r\nconst client = new Discord.Client();\r\n\r\n/// prefix of commands feel free to change this\r\nconst prefix = '+'\r\n\r\n//requiring path and fs modules\r\nconst path = require('path');\r\nconst fs = require('fs');\r\n//joining path of directory\r\nconst directoryPath = path.join('./Commands/');\r\n//passsing directoryPath and callback function\r\nfs.readdir(directoryPath, function (err, files) {\r\n\r\n    //handling error\r\n    if (err) {\r\n        return console.log('Unable to scan directory: ' + err);\r\n    }\r\n    //listing all files using forEach\r\n    files.forEach(function (file) {\r\n        // Do whatever you want to do with the file\r\n\r\n\r\n        console.log(file);\r\n    });\r\n});\r\n\r\n\r\n\r\n\r\n\r\nclient.once('ready' , () => {\r\n    console.log('Jarvis is Online!');\r\n});\r\n\r\nclient.on('message', message =>{\r\n    if(!message.content.startsWith(prefix) || message.author.bot) return;\r\n\r\n    const args = message.content.slice(prefix.length).split(/ +/);\r\n    const command = args.shift().toLowerCase();\r\n\r\n\r\n    /// Command block begins here\r\n    if(command === 'ping'){\r\n        message.channel.send('pong!');\r\n    }else if (command == 'faq' || command == 'FAQ'){\r\n        message.channel.send(\"To be or not to be that is the question, we should strive for the benefit of mankind\")\r\n    }\r\n});\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nclient.login('NzYwODE5NDIxNjk4MDY0NDA0.X3RmTQ.H5AkPod_08zk5rDwji57ExT4ryM');\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- main.js	(revision 5ac912d2245cff274342be69884620a95ed16c6c)
++++ main.js	(date 1601611207712)
+@@ -8,11 +8,12 @@
+ //requiring path and fs modules
+ const path = require('path');
+ const fs = require('fs');
++client.commands = new Discord.Collection();
++
+ //joining path of directory
+ const directoryPath = path.join('./Commands/');
+ //passsing directoryPath and callback function
+ fs.readdir(directoryPath, function (err, files) {
+-
+     //handling error
+     if (err) {
+         return console.log('Unable to scan directory: ' + err);
+@@ -20,7 +21,8 @@
+     //listing all files using forEach
+     files.forEach(function (file) {
+         // Do whatever you want to do with the file
+-
++        const command = require(`./Commands/${file}`);
++        client.commands.set(command.name, command);
+ 
+         console.log(file);
+     });
+@@ -43,7 +45,7 @@
+ 
+     /// Command block begins here
+     if(command === 'ping'){
+-        message.channel.send('pong!');
++        client.commands.get('ping').execute(message,args)
+     }else if (command == 'faq' || command == 'FAQ'){
+         message.channel.send("To be or not to be that is the question, we should strive for the benefit of mankind")
+     }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/workspace.xml	(revision 5ac912d2245cff274342be69884620a95ed16c6c)
++++ .idea/workspace.xml	(revision 5ac912d2245cff274342be69884620a95ed16c6c)
+@@ -1,203 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="BranchesTreeState">
+-    <expand>
+-      <path>
+-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-      </path>
+-      <path>
+-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-      </path>
+-      <path>
+-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+-      </path>
+-    </expand>
+-    <select />
+-  </component>
+-  <component name="ChangeListManager">
+-    <list default="true" id="497e332c-baa7-45f3-aae7-27de2c058edc" name="Default Changelist" comment="Begining to add commands, will grow this into bigger file so we might need to consider building this in a OOP structure. ~kev">
+-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/Discord_Bot.iml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/main.js" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+-    </list>
+-    <option name="SHOW_DIALOG" value="false" />
+-    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+-    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+-    <option name="LAST_RESOLUTION" value="IGNORE" />
+-  </component>
+-  <component name="FileTemplateManagerImpl">
+-    <option name="RECENT_TEMPLATES">
+-      <list>
+-        <option value="JavaScript File" />
+-      </list>
+-    </option>
+-  </component>
+-  <component name="Git.Settings">
+-    <option name="PREVIOUS_COMMIT_AUTHORS">
+-      <list>
+-        <option value="Kevin &lt;floreskevin51398@gmail.com&gt;" />
+-      </list>
+-    </option>
+-    <option name="RECENT_BRANCH_BY_REPOSITORY">
+-      <map>
+-        <entry key="$PROJECT_DIR$" value="master" />
+-      </map>
+-    </option>
+-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+-    <option name="SIGN_OFF_COMMIT" value="true" />
+-  </component>
+-  <component name="MavenImportPreferences">
+-    <option name="generalSettings">
+-      <MavenGeneralSettings>
+-        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2\plugins\maven\lib\maven3" />
+-      </MavenGeneralSettings>
+-    </option>
+-  </component>
+-  <component name="ProjectId" id="1iED45PPcrdwnbQ13F5suegCJ2Q" />
+-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+-    <ConfirmationsSetting value="2" id="Add" />
+-  </component>
+-  <component name="ProjectViewState">
+-    <option name="hideEmptyMiddlePackages" value="true" />
+-    <option name="showLibraryContents" value="true" />
+-  </component>
+-  <component name="PropertiesComponent">
+-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+-    <property name="WebServerToolWindowFactoryState" value="false" />
+-    <property name="aspect.path.notification.shown" value="true" />
+-    <property name="last_opened_file_path" value="$PROJECT_DIR$/main.js" />
+-    <property name="node.js.detected.package.eslint" value="true" />
+-    <property name="node.js.detected.package.tslint" value="true" />
+-    <property name="node.js.path.for.package.eslint" value="project" />
+-    <property name="node.js.path.for.package.tslint" value="project" />
+-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+-    <property name="nodejs_package_manager_path" value="npm" />
+-    <property name="project.structure.last.edited" value="Project" />
+-    <property name="project.structure.proportion" value="0.0" />
+-    <property name="project.structure.side.proportion" value="0.0" />
+-    <property name="restartRequiresConfirmation" value="false" />
+-  </component>
+-  <component name="RecentsManager">
+-    <key name="MoveFile.RECENT_KEYS">
+-      <recent name="C:\Users\flore\Desktop\Discord_Bot\commands" />
+-      <recent name="C:\Users\flore\Desktop\Discord_Bot\.idea" />
+-      <recent name="C:\Users\flore\Desktop\Discord_Bot" />
+-      <recent name="C:\Users\flore\Desktop\Discord_Bot\node_modules" />
+-    </key>
+-  </component>
+-  <component name="RunManager">
+-    <configuration name="Node" type="NodeJSConfigurationType" path-to-node="$APPLICATION_CONFIG_DIR$/node/node-v12.13.1-win-x64/node" path-to-js-file="main.js" working-dir="$PROJECT_DIR$">
+-      <method v="2" />
+-    </configuration>
+-  </component>
+-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+-  <component name="TaskManager">
+-    <task active="true" id="Default" summary="Default task">
+-      <changelist id="497e332c-baa7-45f3-aae7-27de2c058edc" name="Default Changelist" comment="" />
+-      <created>1601463662906</created>
+-      <option name="number" value="Default" />
+-      <option name="presentableId" value="Default" />
+-      <updated>1601463662906</updated>
+-      <workItem from="1601463663930" duration="8691000" />
+-      <workItem from="1601496677360" duration="280000" />
+-      <workItem from="1601581430012" duration="2935000" />
+-    </task>
+-    <task id="LOCAL-00001" summary="Begining to add commands, will grow this into bigger file so we might need to consider building this in a OOP structure. ~kev">
+-      <created>1601465705405</created>
+-      <option name="number" value="00001" />
+-      <option name="presentableId" value="LOCAL-00001" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1601465705405</updated>
+-    </task>
+-    <task id="LOCAL-00002" summary="Begining to add commands, will grow this into bigger file so we might need to consider building this in a OOP structure. ~kev">
+-      <created>1601487820258</created>
+-      <option name="number" value="00002" />
+-      <option name="presentableId" value="LOCAL-00002" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1601487820258</updated>
+-    </task>
+-    <option name="localTasksCounter" value="3" />
+-    <servers />
+-  </component>
+-  <component name="TypeScriptGeneratedFilesManager">
+-    <option name="version" value="3" />
+-  </component>
+-  <component name="Vcs.Log.Tabs.Properties">
+-    <option name="TAB_STATES">
+-      <map>
+-        <entry key="MAIN">
+-          <value>
+-            <State />
+-          </value>
+-        </entry>
+-      </map>
+-    </option>
+-  </component>
+-  <component name="VcsManagerConfiguration">
+-    <MESSAGE value="Begining to add commands, will grow this into bigger file so we might need to consider building this in a OOP structure. ~kev" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Begining to add commands, will grow this into bigger file so we might need to consider building this in a OOP structure. ~kev" />
+-  </component>
+-  <component name="WindowStateProjectService">
+-    <state x="1632" y="298" key="#Node.js_and_NPM" timestamp="1601488166566">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state x="1632" y="298" key="#Node.js_and_NPM/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601488166566" />
+-    <state x="2334" y="175" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601464367416">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state x="2334" y="175" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601464367416" />
+-    <state x="92" y="92" width="3656" height="856" key="DiffContextDialog" timestamp="1601487824492">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state x="92" y="92" width="3656" height="856" key="DiffContextDialog/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601487824492" />
+-    <state x="2660" y="287" key="FileChooserDialogImpl" timestamp="1601603927603">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state x="2660" y="287" key="FileChooserDialogImpl/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601603927603" />
+-    <state x="2485" y="452" key="Github.ShareDialog" timestamp="1601464480570">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state x="2485" y="452" key="Github.ShareDialog/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601464480570" />
+-    <state x="2405" y="252" key="Github.UntrackedFilesDialog" timestamp="1601464485768">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state x="2405" y="252" key="Github.UntrackedFilesDialog/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601464485768" />
+-    <state width="1864" height="263" key="GridCell.Tab.0.bottom" timestamp="1601603950266">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state width="1864" height="263" key="GridCell.Tab.0.bottom/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601603950266" />
+-    <state width="1864" height="263" key="GridCell.Tab.0.center" timestamp="1601603950266">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state width="1864" height="263" key="GridCell.Tab.0.center/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601603950266" />
+-    <state width="1864" height="263" key="GridCell.Tab.0.left" timestamp="1601603950266">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state width="1864" height="263" key="GridCell.Tab.0.left/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601603950266" />
+-    <state width="1864" height="263" key="GridCell.Tab.0.right" timestamp="1601603950266">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state width="1864" height="263" key="GridCell.Tab.0.right/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601603950266" />
+-    <state x="1400" y="94" key="SettingsEditor" timestamp="1601487497619">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state x="1400" y="94" key="SettingsEditor/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601487497619" />
+-    <state x="1512" y="253" key="Vcs.Push.Dialog.v2" timestamp="1601488040510">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state x="1512" y="253" key="Vcs.Push.Dialog.v2/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601488040510" />
+-    <state x="1737" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1601604428506">
+-      <screen x="0" y="0" width="3840" height="1040" />
+-    </state>
+-    <state x="1737" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601604428506" />
+-  </component>
+-</project>
+\ No newline at end of file

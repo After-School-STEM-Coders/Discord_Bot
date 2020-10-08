@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const {welcomeMessages} = require('./Commands/welcome');
 const fs = require('fs');
 
 const client = new Discord.Client();
@@ -36,12 +37,25 @@ fs.readdir(directoryPath, function (err, files) {
 client.once('ready' , () => {
     console.log('Jarvis is Online!');
 
-    
+
+});
+client.on('guildMemberAdd', member => {
+    // Send the message to a designated channel on a server:
+    const channel = member.guild.channels.cache.find(ch => ch.name === '🧮-main-chat-🧮');
+    // Do nothing if the channel wasn't found on this server
+    if (!channel) return;
+    // Send the message, mentioning the member
+
+    const rolesChannel = member.guild.channels.cache.find(ch => ch.name === 'choose-your-roles');
+
+    channel.send(welcomeMessages[welcomeIndex](member, rolesChannel));
+
+    welcomeIndex = (welcomeIndex + 1) % welcomeAmount;
 });
 
 client.on('message', message =>{
     if(!message.content.startsWith(prefix) || message.author.bot) return;
-    
+
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
@@ -56,10 +70,10 @@ client.on('message', message =>{
 
         }
     });
-        
+
 });
 
-    
+
 
 client.on('messageReactionAdd', async (reaction, user) => {
     // When we receive a reaction we check if the reaction is partial or not
@@ -71,14 +85,14 @@ client.on('messageReactionAdd', async (reaction, user) => {
     fs.readFile(__dirname + '/data/rules.txt', 'utf8', function(err, data){
 
         info = data.split('\n');
-        
+
         if (reaction.message.channel == info[0] && reaction.message.id == info[1] && reaction.emoji.name == "👍")
         {
             reaction.message.channel.send(`Thank you for reacting, ${user}`);
         }
 
 
-    }); 
+    });
 
 });
 
