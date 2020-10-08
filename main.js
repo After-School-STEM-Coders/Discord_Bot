@@ -57,10 +57,7 @@ client.on('message', message =>{
 
         }
     });
-        
 });
-
-    
 
 client.on('messageReactionAdd', async (reaction, user) => {
     // When we receive a reaction we check if the reaction is partial or not
@@ -83,8 +80,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 });
 
-
-
-
-
-client.login('NzYwODE5NDIxNjk4MDY0NDA0.X3RmTQ.H5AkPod_08zk5rDwji57ExT4ryM');
+const bot_token = process.env.NARVIS;
+//console.log(bot_token);
+client.login(bot_token);
