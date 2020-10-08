@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const fs = require('fs');
 
 const client = new Discord.Client();
 
@@ -7,12 +8,13 @@ const prefix = '+'
 
 //requiring path and fs modules
 const path = require('path');
-const fs = require('fs');
+
+client.commands = new Discord.Collection();
+
 //joining path of directory
 const directoryPath = path.join('./Commands/');
 //passsing directoryPath and callback function
 fs.readdir(directoryPath, function (err, files) {
-
     //handling error
     if (err) {
         return console.log('Unable to scan directory: ' + err);
@@ -20,7 +22,8 @@ fs.readdir(directoryPath, function (err, files) {
     //listing all files using forEach
     files.forEach(function (file) {
         // Do whatever you want to do with the file
-
+        const command = require(`./Commands/${file}`);
+        client.commands.set(command.name, command);
 
         console.log(file);
     });
@@ -32,38 +35,52 @@ fs.readdir(directoryPath, function (err, files) {
 
 client.once('ready' , () => {
     console.log('Jarvis is Online!');
+
+    
 });
 
 client.on('message', message =>{
     if(!message.content.startsWith(prefix) || message.author.bot) return;
-
+    
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
 
     /// Command block begins here
-    if(command === 'ping'){
-        message.channel.send('pong!');
-    }else if (command == 'faq' || command == 'FAQ'){
-        message.channel.send("To be or not to be that is the question, we should strive for the benefit of mankind")
-    }
+    client.commands.some(function(cmd) {
+
+        if (command == cmd.name)
+        {
+            cmd.execute(message);
+            return true;
+
+        }
+    });
+        
 });
 
+    
+
+client.on('messageReactionAdd', async (reaction, user) => {
+    // When we receive a reaction we check if the reaction is partial or not
+    if (reaction.partial) await reaction.fetch();
+    if (user.bot) return;
+    if (!reaction.message.guild) return;
+
+    // Get rules channel and message information for rules interaction
+    fs.readFile(__dirname + '/data/rules.txt', 'utf8', function(err, data){
+
+        info = data.split('\n');
+        
+        if (reaction.message.channel == info[0] && reaction.message.id == info[1] && reaction.emoji.name == "👍")
+        {
+            reaction.message.channel.send(`Thank you for reacting, ${user}`);
+        }
 
 
+    }); 
 
-
-
-
-
-
-
-
-
-
-
-
-
+});
 
 
 
