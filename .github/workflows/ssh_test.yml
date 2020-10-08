@@ -26,7 +26,7 @@ jobs:
         script: |
           touch ~/FirstStep.txt
           touch /home/ubuntu/FirstStep2.txt
-          kill $(pgrep -f Discord_Bot)
+          if pgrep -f Discord_Bot; then kill $(pgrep -f Discord_Bot); fi
           export NARVIS=${{ secrets.NARVIS }}
           node ~/Discord_Bot/main.js &
           touch ~/SecondStep.txt
