@@ -20,9 +20,14 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
+        key: ${{ secrets.KEY }}
+        
         script: |
+          touch ~/FirstStep.txt
+          touch /home/ubuntu/FirstStep2.txt
           kill $(pgrep -f Discord_Bot)
           export NARVIS=${{ secrets.NARVIS }}
           node ~/Discord_Bot/main.js &
+          touch ~/SecondStep.txt
+          touch /home/ubuntu/SecondStep2.txt
