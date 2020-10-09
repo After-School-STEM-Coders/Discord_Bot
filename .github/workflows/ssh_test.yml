@@ -25,8 +25,7 @@ jobs:
         
         script: |
           touch ~/Step1.txt
-          touch ~/Step2.txt
           export NARVIS=${{ secrets.NARVIS }}
           touch ~/Step3.txt
-          node ~/Discord_Bot/main.js
-          touch ~/Step4.txt
+          sh Discord_Bot/startup.sh
+          touch ~/StepsCompleted.txt
