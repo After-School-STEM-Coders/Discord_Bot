@@ -141,5 +141,6 @@ client.on('messageReactionRemove', async (reaction, user) => {
 
 
 
-
-client.login('NzYwODE5NDIxNjk4MDY0NDA0.X3RmTQ.H5AkPod_08zk5rDwji57ExT4ryM');
+const botToken = process.env.BARVIS
+// console.log(bot_token);
+client.login(botToken)
