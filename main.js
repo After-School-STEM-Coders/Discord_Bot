@@ -1,7 +1,9 @@
+const { info } = require('console');
 const Discord = require('discord.js');
 const fs = require('fs');
+const helpcmd = require('./commands/help')
 
-const client = new Discord.Client();
+const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
 /// prefix of commands feel free to change this
 const prefix = '+'
@@ -35,9 +37,8 @@ fs.readdir(directoryPath, function (err, files) {
 
 
 client.once('ready' , () => {
-    console.log('Jarvis is Online!');
 
-    
+    console.log('Jarvis is Online!');
 });
 
 client.on('message', message =>{
@@ -46,13 +47,21 @@ client.on('message', message =>{
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
+    // Help Command!
+    if (command == "help") {
+
+        helpcmd.execute(message, client.commands, args);
+        return true;
+
+    }
+
 
     /// Command block begins here
     client.commands.some(function(cmd) {
 
         if (command == cmd.name)
         {
-            cmd.execute(message);
+            cmd.execute(message, args);
             return true;
 
         }
@@ -64,6 +73,7 @@ client.on('message', message =>{
 
 client.on('messageReactionAdd', async (reaction, user) => {
     // When we receive a reaction we check if the reaction is partial or not
+
     if (reaction.partial) await reaction.fetch();
     if (user.bot) return;
     if (!reaction.message.guild) return;
@@ -71,15 +81,60 @@ client.on('messageReactionAdd', async (reaction, user) => {
     // Get rules channel and message information for rules interaction
     fs.readFile(__dirname + '/data/rules.txt', 'utf8', function(err, data){
 
-        info = data.split('\n');
+        let info = data.split('\n');
         
-        if (reaction.message.channel == info[0] && reaction.message.id == info[1] && reaction.emoji.name == "👍")
+        if (reaction.message.id == info[0] && reaction.emoji.name == "👍")
         {
-            reaction.message.channel.send(`Thank you for reacting, ${user}`);
-        }
+            reaction.message.guild.roles.fetch(info[1].substring(3, info[1].length - 1)).then(roleassigned => {
 
+                reaction.message.guild.members.fetch(user.id).then(member => {
+
+                    member.roles.add(roleassigned);
+                    reaction.message.channel.send(`Thank you for reacting, ${user}. The role ${roleassigned} has been assigned to you!`);
+
+                })
+                
+
+            });
+
+            
+        }
+        
 
     }); 
+
+});
+
+client.on('messageReactionRemove', async (reaction, user) => {
+
+    if (reaction.partial) await reaction.fetch();
+    if (user.bot) return;
+    if (!reaction.message.guild) return;
+
+    fs.readFile(__dirname + '/data/rules.txt', 'utf8', function(err, data){
+
+        let info = data.split('\n');
+        
+        if (reaction.message.id == info[0] && reaction.emoji.name == "👍")
+        {
+            reaction.message.guild.roles.fetch(info[1].substring(3, info[1].length - 1)).then(roleassigned => {
+
+                reaction.message.guild.members.fetch(user.id).then(member => {
+
+                    member.roles.remove(roleassigned);
+                    reaction.message.channel.send(`Hey ${user}, you deleted your reaction. The role ${roleassigned} has been removed!`);
+
+                })
+                
+
+            });
+
+            
+        }
+        
+
+    }); 
+
 
 });
 

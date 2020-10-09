@@ -9,11 +9,10 @@ module.exports = {
         const image = message.author.avatarURL();
         const userName = message.author.username;
 
-        let experience = 290;
-        let level = Math.floor( Math.log2(experience/100) );
-        let currentLevelExperience = Math.pow(2, level) * 100;
-        let playerLevelExperience = (experience - currentLevelExperience);
-        let barPercentage =  playerLevelExperience / (currentLevelExperience * 2);
+        let level = 1;
+        let experience = 50;
+        let nextLevelExperience = (level + 1) * 100
+        let barPercentage =  experience / nextLevelExperience;
         let numSquares = Math.floor(20 * barPercentage);
 
         let bar = "";
@@ -31,7 +30,7 @@ module.exports = {
         const embed = new Discord.MessageEmbed()
         .setAuthor(userName + " - Level " + level, image)
         .setColor(0x0000ff)
-        .addField(`${playerLevelExperience} / ${currentLevelExperience * 2} xp`, bar);
+        .addField(`${experience} / ${nextLevelExperience} xp`, bar);
         
     
         message.channel.send(embed);
