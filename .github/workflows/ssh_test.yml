@@ -27,5 +27,5 @@ jobs:
           touch ~/NarvisStep1.txt
           export NARVIS=${{ secrets.NARVIS }}
           touch ~/NarvisStep2.txt
-          sh Discord_Bot/startup.sh
+          sh Discord_Bot/Narvis/startup.sh
           touch ~/NarvisStepsCompleted.txt
