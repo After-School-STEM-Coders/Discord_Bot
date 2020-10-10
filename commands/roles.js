@@ -8,9 +8,13 @@ module.exports = {
 
         message.guild.roles.fetch().then(roles => {
 
+            let text = "";
+
             roles.cache.forEach(element => {
-                message.reply(`${element}`);
+                text += `${element}\n`;
             });
+
+            message.channel.send(text);
             
 
         });
