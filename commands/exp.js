@@ -27,7 +27,7 @@ module.exports = {
             }
         }
         console.log(`${experience} / ${nextLevelExperience} xp`)
-        console.log(bar`)
+        console.log(bar)
         const embed = new Discord.MessageEmbed()
         .setAuthor(userName + " - Level " + level, image)
         .setColor(0x0000ff)
