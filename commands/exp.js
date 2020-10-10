@@ -17,13 +17,14 @@ module.exports = {
 
         let bar = "";
 
+
         for (let i = 0; i < 20; i++)
         {
             if(i < numSquares) {
-                bar += "O";
+                bar += "🟩";
             }
             else{
-                bar += ".";
+                bar += "⬜";
             }
         }
         console.log(`${experience} / ${nextLevelExperience} xp`)
