@@ -1,7 +1,7 @@
 const { info } = require('console');
 const Discord = require('discord.js');
 const fs = require('fs');
-const helpcmd = require('./commands/help')
+
 
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
@@ -49,10 +49,19 @@ client.on('message', message =>{
 
     // Help Command!
     if (command == "help") {
-
+        const helpcmd = require('./commands/help')
         helpcmd.execute(message, client.commands, args);
         return true;
 
+    }
+
+        // Help Command!
+    if (command == "commands") {
+        
+        const commandscmd = require('./commands/commands')
+        commandscmd.execute(message, client.commands, args);
+        return true;
+    
     }
 
 
