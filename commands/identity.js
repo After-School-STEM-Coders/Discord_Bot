@@ -19,6 +19,7 @@ module.exports = {
                 }
             }
         }
-        message.channel.send(`The current process id is ${process.pid}.\nIt has been running for ${process.uptime()} seconds.\nIP Address: ${results["eth0"][0]}\nHostname: ${os.hostname()}`);
+        const full_ip_info = JSON.stringify(results);
+        message.channel.send(`The current process id is ${process.pid}.\nIt has been running for ${process.uptime()} seconds.\nIP Address: ${full_ip_info}\nHostname: ${os.hostname()}`);
     }
 }
