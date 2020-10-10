@@ -3,7 +3,7 @@ module.exports = {
     description: 'Shows information about the current bot process.',
     execute(message, args){
         const { networkInterfaces } = require('os');
-
+        const os = require('os');
         const nets = networkInterfaces();
         const results = Object.create(null); // or just '{}', an empty object
 
