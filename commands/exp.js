@@ -17,6 +17,7 @@ module.exports = {
 
         let bar = "";
 
+
         for (let i = 0; i < 20; i++)
         {
             if(i < numSquares) {
@@ -26,7 +27,8 @@ module.exports = {
                 bar += "⬜";
             }
         }
-
+        console.log(`${experience} / ${nextLevelExperience} xp`)
+        console.log(bar)
         const embed = new Discord.MessageEmbed()
         .setAuthor(userName + " - Level " + level, image)
         .setColor(0x0000ff)
