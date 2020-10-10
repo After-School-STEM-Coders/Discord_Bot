@@ -20,10 +20,10 @@ module.exports = {
         for (let i = 0; i < 20; i++)
         {
             if(i < numSquares) {
-                bar += "🟩";
+                bar += "O";
             }
             else{
-                bar += "⬜";
+                bar += ".";
             }
         }
         console.log(`${experience} / ${nextLevelExperience} xp`)
