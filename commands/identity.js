@@ -19,6 +19,6 @@ module.exports = {
                 }
             }
         }
-        message.channel.send(`The current process id is ${process.pid}.\nIt has been running for ${process.uptime()} seconds.\nIP Address: ${results["eth0"][0]}`);
+        message.channel.send(`The current process id is ${process.pid}.\nIt has been running for ${process.uptime()} seconds.\nIP Address: ${results["eth0"][0]}\nHostname: ${os.hostname()}`);
     }
 }
