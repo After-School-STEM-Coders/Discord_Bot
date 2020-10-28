@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="497e332c-baa7-45f3-aae7-27de2c058edc" name="Default Changelist" comment="Begining to add commands, will grow this into bigger file so we might need to consider building this in a OOP structure. ~kev">
+      <change beforePath="$PROJECT_DIR$/.idea/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/main.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Kevin &lt;floreskevin51398@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SIGN_OFF_COMMIT" value="true" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1iED45PPcrdwnbQ13F5suegCJ2Q" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="restartRequiresConfirmation" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\flore\Desktop\Discord_Bot\commands" />
+      <recent name="C:\Users\flore\Desktop\Discord_Bot\.idea" />
+      <recent name="C:\Users\flore\Desktop\Discord_Bot" />
+      <recent name="C:\Users\flore\Desktop\Discord_Bot\node_modules" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Node" type="NodeJSConfigurationType" path-to-node="$APPLICATION_CONFIG_DIR$/node/node-v12.13.1-win-x64/node" path-to-js-file=".idea/main.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="497e332c-baa7-45f3-aae7-27de2c058edc" name="Default Changelist" comment="" />
+      <created>1601463662906</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1601463662906</updated>
+      <workItem from="1601463663930" duration="8691000" />
+      <workItem from="1601496677360" duration="280000" />
+      <workItem from="1601581430012" duration="2059000" />
+    </task>
+    <task id="LOCAL-00001" summary="Begining to add commands, will grow this into bigger file so we might need to consider building this in a OOP structure. ~kev">
+      <created>1601465705405</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1601465705405</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Begining to add commands, will grow this into bigger file so we might need to consider building this in a OOP structure. ~kev">
+      <created>1601487820258</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1601487820258</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Begining to add commands, will grow this into bigger file so we might need to consider building this in a OOP structure. ~kev" />
+    <option name="LAST_COMMIT_MESSAGE" value="Begining to add commands, will grow this into bigger file so we might need to consider building this in a OOP structure. ~kev" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1632" y="298" key="#Node.js_and_NPM" timestamp="1601488166566">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="1632" y="298" key="#Node.js_and_NPM/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601488166566" />
+    <state x="2334" y="175" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601464367416">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="2334" y="175" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601464367416" />
+    <state x="92" y="92" width="3656" height="856" key="DiffContextDialog" timestamp="1601487824492">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="92" y="92" width="3656" height="856" key="DiffContextDialog/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601487824492" />
+    <state x="2660" y="287" key="FileChooserDialogImpl" timestamp="1601464361642">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="2660" y="287" key="FileChooserDialogImpl/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601464361642" />
+    <state x="2485" y="452" key="Github.ShareDialog" timestamp="1601464480570">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="2485" y="452" key="Github.ShareDialog/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601464480570" />
+    <state x="2405" y="252" key="Github.UntrackedFilesDialog" timestamp="1601464485768">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="2405" y="252" key="Github.UntrackedFilesDialog/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601464485768" />
+    <state width="3797" height="281" key="GridCell.Tab.0.bottom" timestamp="1601496665519">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state width="3797" height="281" key="GridCell.Tab.0.bottom/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601496665519" />
+    <state width="3797" height="281" key="GridCell.Tab.0.center" timestamp="1601496665519">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state width="3797" height="281" key="GridCell.Tab.0.center/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601496665519" />
+    <state width="3797" height="281" key="GridCell.Tab.0.left" timestamp="1601496665519">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state width="3797" height="281" key="GridCell.Tab.0.left/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601496665519" />
+    <state width="3797" height="281" key="GridCell.Tab.0.right" timestamp="1601496665519">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state width="3797" height="281" key="GridCell.Tab.0.right/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601496665519" />
+    <state x="1400" y="94" key="SettingsEditor" timestamp="1601487497619">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="1400" y="94" key="SettingsEditor/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601487497619" />
+    <state x="1512" y="253" key="Vcs.Push.Dialog.v2" timestamp="1601488040510">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="1512" y="253" key="Vcs.Push.Dialog.v2/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601488040510" />
+    <state x="1737" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1601487694106">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="1737" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3840.1040/-1080.-233.1080.1880/1010.-1080.1920.1040@0.0.3840.1040" timestamp="1601487694106" />
+  </component>
+</project>
