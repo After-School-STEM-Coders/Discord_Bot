@@ -1,28 +1,42 @@
-const Discord = require('discord.js')
-const fs = require('fs')
+const Discord = require('discord.js');
+const fs = require('fs');
 
 module.exports = {
-  name: 'rules',
-  description: 'this rules!',
-  execute (message, args) {
-    const embed = new Discord.MessageEmbed()
-      .setColor(0xff0000)
-      .setTitle('Rules')
-      .setDescription('This is an **embeded** message')
-      .addField('Rules 1', 'This is rule 1')
-      .addField('Rule 2', 'This is rule 2')
-      .addField('Rule 3', 'This is rule 3')
-      .addField('Rule 4', 'this is rule 4')
-    message.channel.send(embed).then(sentMessage => {
-      sentMessage.react('👍')
-      const id = sentMessage.id
-      const channel = sentMessage.channel
-      const info = channel + '\n' + id
-      const path = require('path')
-      fs.writeFile(path.join(__dirname, '/../data/rules.txt'), info, (err) => {
-        if (err) throw err
-        console.log('The file has been saved!')
-      })
-    })
-  }
+    name: 'rules',
+    description: 'this rules!',
+    execute(message, args){
+
+        if (!args[0]) {
+            message.reply("Correct usage is \"+rules @role\" with the welcoming role!");
+            return;
+        }
+        else{
+
+            const embed = new Discord.MessageEmbed()
+            .setColor(0xff0000)
+            .setTitle("Ackwowledgement")
+            .setDescription(`By reacting to this message you agree to the rules of this server, and will be given the role of ${args[0]}!`);
+            
+        
+            message.channel.send(embed).then(sentMessage => {
+        
+                sentMessage.react("👍");
+    
+                let id = sentMessage.id;
+                let role = args[0];
+                let info = id + "\n" + role;
+    
+                fs.writeFile(__dirname + '/../data/rules.txt', info, (err) => {
+                    if (err) throw err;
+                    console.log('The file has been saved!');
+                  });
+        
+            });
+    
+
+        }
+
+
+
+    }
 }
