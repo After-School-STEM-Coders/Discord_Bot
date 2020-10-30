@@ -44,7 +44,7 @@ Most personal workflows should be supported. This is not a very opinionated setu
 Most reccomended workflow:
 
 1) Clone the repo. Checkout your branch. Edit -> Commit -> Push.
-2) Go to https://github.com/Super-COSC-Kids/Discord_Bot/actions amd watch your new code get deployed.
+2) Go to https://github.com/Super-COSC-Kids/Discord_Bot/actions and watch your new code get deployed.
 3) Test your new bot.
 
 Need to SSH into the server?
