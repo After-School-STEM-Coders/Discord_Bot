@@ -49,12 +49,12 @@ Most reccomended workflow:
 
 Need to SSH into the server?
 
-IP: Your Elastic IP address.
-port: `22`
-user: `ubuntu`
-Auth Method: `Public Key`
-Private Key: `discordbotvm_yourname.ppk`
-Passphrase: I would leave this blank personally and type in every time you connect
+ - IP: Your Elastic IP address.
+ - port: `22`
+ - user: `ubuntu`
+ - Auth Method: `Public Key`
+ - Private Key: `discordbotvm_yourname.ppk`
+ - Passphrase: I would leave this blank personally and type in every time you connect
 
 In a console, this would typically be done with the following:
 
