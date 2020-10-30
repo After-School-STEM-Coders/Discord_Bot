@@ -11,8 +11,9 @@ Secrets stored in Github used for these scripts:
  - KEY - Text of .ppk key used for SSH authentication 
  - PORT - 22
  - JARVIS - Discord bot API key for master branch, associated Discord user is on the **real** server.
- - BARVIS - Discord bot API key for bot #2, associated Discord user is on **test** server.
- - NARVIS - Discord bot API key for bot #3, associated Discord user is on **test** server.
+ - BARVIS - Discord bot API key for bot #2, (any branch under active development) associated Discord user is on **test** server.
+ - NARVIS - Discord bot API key for bot #3, (any branch under active development) associated Discord user is on **test** server.
+ - xARVIS - Feel free to add additional API keys as needed. Ideally we'd have one per branch.
 
 ## Cattle, Not Pets:
 
