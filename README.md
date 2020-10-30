@@ -28,7 +28,7 @@ sudo apt-get install -y nodejs
 npm install discord.js
 sudo apt-get --yes install postgresql
 sudo -u postgres createuser {USERNAME}
-sudo su - postgres -c "psql -c 'ALTER USER {USERNAME} SUPERUSER'"
+sudo su - postgres -c "psql -c 'ALTER USER {USERNAME} SUPERUSER'"```
 
 3. Re-assign the static Elastic IP address from the old server to the new one.
 
