@@ -6,14 +6,13 @@ Commits are automatically deployed to AWS servers. This uses Github Actions, vie
 
 Secrets stored in Github used for these scripts:
 
-HOST - External IP address of EC2 instance.
-USERNAME - username for amazon EC2 instance.
-KEY - Text of .ppk key used for SSH authentication 
-PORT - 22
-
-JARVIS - Discord bot API key for bot #1
-BARVIS - Discord bot API key for bot #2
-NARVIS - Discord bot API key for bot #3
+ - HOST - External IP address of EC2 instance.
+ - USERNAME - username for amazon EC2 instance.
+ - KEY - Text of .ppk key used for SSH authentication 
+ - PORT - 22
+ - JARVIS - Discord bot API key for master branch, associated Discord user is on the **real** server.
+ - BARVIS - Discord bot API key for bot #2, associated Discord user is on **test** server.
+ - NARVIS - Discord bot API key for bot #3, associated Discord user is on **test** server.
 
 ## Cattle, Not Pets:
 
