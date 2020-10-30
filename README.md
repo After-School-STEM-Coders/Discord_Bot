@@ -94,5 +94,5 @@ Both of these allow your code to run on the remote machine, but gives you the sa
 
 ## Merge often
 
-Final note - try to close up branches as soon as possible. Merge in any reasonably finalized changes, then rebranch again immediately and continue hacking.
+Try to close up branches as soon as possible. Merge in any reasonably finalized changes, then rebranch again immediately and continue hacking.
 
