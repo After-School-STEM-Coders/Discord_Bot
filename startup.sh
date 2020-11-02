@@ -1,6 +1,6 @@
 #!/bin/bash
-if pgrep -f "node.*Narvis"
- then kill "$(pgrep -f "node.*Narvis")"
+if pgrep -f "node.*COSCY"
+ then kill "$(pgrep -f "node.*COSCY")"
 fi
 sleep 5
-node ~/Discord_Bot/Narvis/main.js &
+node ~/Discord_Bot/COSCYBOT/main.js &
