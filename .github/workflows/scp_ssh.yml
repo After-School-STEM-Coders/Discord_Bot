@@ -14,7 +14,7 @@ jobs:
         port: ${{ secrets.PORT }}
         key: ${{ secrets.KEY }}
         source: "*"
-        target: "/home/ubuntu/Discord_Bot/Barvis"
+        target: "/home/ubuntu/Discord_Bot/COSCYBOT"
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
       with:
@@ -24,8 +24,8 @@ jobs:
         key: ${{ secrets.KEY }}
         
         script: |
-          touch ~/BarvisStep1.txt
-          export BARVIS=${{ secrets.BARVIS }}
-          touch ~/BarvisStep2.txt
-          sh Discord_Bot/Barvis/startup.sh
-          touch ~/BarvisStepsCompleted.txt
+          touch ~/COSCYBOTStep1.txt
+          export BARVIS=${{ secrets.COSCYBOT }}
+          touch ~/COSCYBOTStep2.txt
+          sh Discord_Bot/COSCYBOT/startup.sh
+          touch ~/COSCYBOTStepsCompleted.txt
