@@ -145,6 +145,6 @@ client.on('messageReactionRemove', async (reaction, user) => {
 
 
 
-const botToken = process.env.NARVIS
+const botToken = process.env.COSCYBOT
 // console.log(bot_token);
 client.login(botToken)
