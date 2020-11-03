@@ -1,6 +1,6 @@
 const { info } = require('console');
 const Discord = require('discord.js');
-const {welcomeMessages} = require('./Commands/welcome');
+const {welcomeMessages} = require('./commands/welcome');
 const fs = require('fs');
 
 
@@ -12,7 +12,7 @@ const prefix = '+'
 // requiring path and fs modules
 const path = require('path')
 
-client.commands = new Discord.Collection()
+client.commands = new Discord.Collection()re
 
 // joining path of directory
 
