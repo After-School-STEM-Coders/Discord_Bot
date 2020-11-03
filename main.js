@@ -12,7 +12,7 @@ const prefix = '+'
 // requiring path and fs modules
 const path = require('path')
 
-client.commands = new Discord.Collection()re
+client.commands = new Discord.Collection()
 
 // joining path of directory
 
