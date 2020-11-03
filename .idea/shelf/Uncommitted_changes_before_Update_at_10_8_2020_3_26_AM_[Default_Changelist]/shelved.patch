@@ -1,0 +1,113 @@
+Index: main.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const Discord = require('discord.js');\r\nconst fs = require('fs');\r\n\r\nconst client = new Discord.Client();\r\n\r\n/// prefix of commands feel free to change this\r\nconst prefix = '+'\r\n\r\n//requiring path and fs modules\r\nconst path = require('path');\r\n\r\nclient.commands = new Discord.Collection();\r\n\r\n//joining path of directory\r\nconst directoryPath = path.join('./Commands/');\r\n//passsing directoryPath and callback function\r\nfs.readdir(directoryPath, function (err, files) {\r\n    //handling error\r\n    if (err) {\r\n        return console.log('Unable to scan directory: ' + err);\r\n    }\r\n    //listing all files using forEach\r\n    files.forEach(function (file) {\r\n        // Do whatever you want to do with the file\r\n        const command = require(`./Commands/${file}`);\r\n        client.commands.set(command.name, command);\r\n\r\n        console.log(file);\r\n    });\r\n});\r\n\r\n\r\n\r\n\r\n\r\nclient.once('ready' , () => {\r\n    console.log('Jarvis is Online!');\r\n\r\n    \r\n});\r\n\r\nclient.on('message', message =>{\r\n    if(!message.content.startsWith(prefix) || message.author.bot) return;\r\n    \r\n    const args = message.content.slice(prefix.length).split(/ +/);\r\n    const command = args.shift().toLowerCase();\r\n\r\n\r\n    /// Command block begins here\r\n    client.commands.some(function(cmd) {\r\n\r\n        if (command == cmd.name)\r\n        {\r\n            cmd.execute(message);\r\n            return true;\r\n\r\n        }\r\n    });\r\n        \r\n});\r\n\r\n    \r\n\r\nclient.on('messageReactionAdd', async (reaction, user) => {\r\n    // When we receive a reaction we check if the reaction is partial or not\r\n    if (reaction.partial) await reaction.fetch();\r\n    if (user.bot) return;\r\n    if (!reaction.message.guild) return;\r\n\r\n    // Get rules channel and message information for rules interaction\r\n    fs.readFile(__dirname + '/data/rules.txt', 'utf8', function(err, data){\r\n\r\n        info = data.split('\\n');\r\n        \r\n        if (reaction.message.channel == info[0] && reaction.message.id == info[1] && reaction.emoji.name == \"\uD83D\uDC4D\")\r\n        {\r\n            reaction.message.channel.send(`Thank you for reacting, ${user}`);\r\n        }\r\n\r\n\r\n    }); \r\n\r\n});\r\n\r\n\r\n\r\n\r\n\r\nclient.login('NzYwODE5NDIxNjk4MDY0NDA0.X3RmTQ.H5AkPod_08zk5rDwji57ExT4ryM');\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- main.js	(revision a06902664e2e959f0bcd2089211b2e308b208569)
++++ main.js	(date 1602145566986)
+@@ -1,5 +1,4 @@
+ const Discord = require('discord.js');
+-const fs = require('fs');
+ 
+ const client = new Discord.Client();
+ 
+@@ -8,13 +7,12 @@
+ 
+ //requiring path and fs modules
+ const path = require('path');
+-
+-client.commands = new Discord.Collection();
+-
++const fs = require('fs');
+ //joining path of directory
+ const directoryPath = path.join('./Commands/');
+ //passsing directoryPath and callback function
+ fs.readdir(directoryPath, function (err, files) {
++
+     //handling error
+     if (err) {
+         return console.log('Unable to scan directory: ' + err);
+@@ -22,8 +20,7 @@
+     //listing all files using forEach
+     files.forEach(function (file) {
+         // Do whatever you want to do with the file
+-        const command = require(`./Commands/${file}`);
+-        client.commands.set(command.name, command);
++
+ 
+         console.log(file);
+     });
+@@ -35,55 +32,41 @@
+ 
+ client.once('ready' , () => {
+     console.log('Jarvis is Online!');
+-
+-    
+ });
+ 
+ client.on('message', message =>{
+     if(!message.content.startsWith(prefix) || message.author.bot) return;
+-    
++
+     const args = message.content.slice(prefix.length).split(/ +/);
+     const command = args.shift().toLowerCase();
+ 
+ 
+     /// Command block begins here
+-    client.commands.some(function(cmd) {
+-
+-        if (command == cmd.name)
+-        {
+-            cmd.execute(message);
+-            return true;
+-
+-        }
+-    });
+-        
+-});
++    if(command === 'ping'){
++        message.channel.send('pong!');
++    }else if (command == 'rules' || command == 'Rules'){
++        message.channel.execute(rules)
++    }
++});
++
+ 
+-    
++
+ 
+-client.on('messageReactionAdd', async (reaction, user) => {
+-    // When we receive a reaction we check if the reaction is partial or not
+-    if (reaction.partial) await reaction.fetch();
+-    if (user.bot) return;
+-    if (!reaction.message.guild) return;
+ 
+-    // Get rules channel and message information for rules interaction
+-    fs.readFile(__dirname + '/data/rules.txt', 'utf8', function(err, data){
+ 
+-        info = data.split('\n');
+-        
+-        if (reaction.message.channel == info[0] && reaction.message.id == info[1] && reaction.emoji.name == "👍")
+-        {
+-            reaction.message.channel.send(`Thank you for reacting, ${user}`);
+-        }
++
+ 
+ 
+-    }); 
+ 
+-});
+ 
+ 
+ 
+ 
+ 
++
++
++
++
++
++
+ client.login('NzYwODE5NDIxNjk4MDY0NDA0.X3RmTQ.H5AkPod_08zk5rDwji57ExT4ryM');

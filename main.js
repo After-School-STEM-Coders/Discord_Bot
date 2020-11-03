@@ -1,5 +1,6 @@
 const { info } = require('console');
 const Discord = require('discord.js');
+const {welcomeMessages} = require('./Commands/welcome');
 const fs = require('fs');
 
 
@@ -38,6 +39,21 @@ fs.readdir(directoryPath, function (err, files) {
 
 client.once('ready' , () => {
     console.log('Jarvis is Online!');
+
+
+});
+client.on('guildMemberAdd', member => {
+    // Send the message to a designated channel on a server:
+    const channel = member.guild.channels.cache.find(ch => ch.name === '🧮-main-chat-🧮');
+    // Do nothing if the channel wasn't found on this server
+    if (!channel) return;
+    // Send the message, mentioning the member
+
+    const rolesChannel = member.guild.channels.cache.find(ch => ch.name === 'choose-your-roles');
+
+    channel.send(welcomeMessages[welcomeIndex](member, rolesChannel));
+
+    welcomeIndex = (welcomeIndex + 1) % welcomeAmount;
 });
 
 client.on('message', message =>{
