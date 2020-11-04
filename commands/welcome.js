@@ -1,4 +1,5 @@
 
+
 let messages = [];
 
 
@@ -47,7 +48,6 @@ messages[20] = (member, rolesChannel) => `${member} hey hey, welcome! definitely
 messages[21] = (member, rolesChannel) => `${member} welcome! check out ${rolesChannel.toString()} Are you in 1306? just click the :snake: emoji in that channel and you'll get 1306-related notifications`;
 
 module.exports.welcomeMessages = messages;
-
 
 
 

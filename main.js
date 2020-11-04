@@ -1,10 +1,20 @@
 const { info } = require('console');
 const Discord = require('discord.js');
 const {welcomeMessages} = require('./commands/welcome');
+let welcomeIndex = Math.floor(Math.random() * welcomeMessages.length)
 const fs = require('fs');
+const {dbClient} = require('pg')
+const util = require('util')
 
+const discordclient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
-const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+// environment variables for database access
+const dbuser = process.env.DBUSER
+const dbhost = process.env.DBHOST
+const dbname = process.env.DBNAME
+const dbpswd = process.env.DBPSWD
+const dbport = process.env.DBPORT
+
 
 /// prefix of commands feel free to change this
 const prefix = '+'
@@ -12,7 +22,7 @@ const prefix = '+'
 // requiring path and fs modules
 const path = require('path')
 
-client.commands = new Discord.Collection()
+discordclient.commands = new Discord.Collection()
 
 // joining path of directory
 
@@ -26,9 +36,11 @@ fs.readdir(directoryPath, function (err, files) {
   // listing all files using forEach
     files.forEach(function (file) {
         // Do whatever you want to do with the file
+
     const command = require(`./commands/${file}`)
-    client.commands.set(command.name, command)
-    console.log(file)
+    if(typeof command.name !== "undefined") {
+        discordclient.commands.set(command.name, command)
+    }
   })
 })
 
@@ -37,26 +49,55 @@ fs.readdir(directoryPath, function (err, files) {
 
 
 
-client.once('ready' , () => {
+discordclient.once('ready' , () => {
     console.log('Jarvis is Online!');
 
 
 });
-client.on('guildMemberAdd', member => {
-    // Send the message to a designated channel on a server:
-    const channel = member.guild.channels.cache.find(ch => ch.name === '🧮-main-chat-🧮');
-    // Do nothing if the channel wasn't found on this server
-    if (!channel) return;
-    // Send the message, mentioning the member
 
-    const rolesChannel = member.guild.channels.cache.find(ch => ch.name === 'choose-your-roles');
+discordclient.on('guildMemberAdd', member => {
+    const dbClient = new dbClient({
+        user: dbuser,
+        host: dbhost,
+        database: dbname,
+        password: dbpswd,
+        port: dbport
+    })
 
-    channel.send(welcomeMessages[welcomeIndex](member, rolesChannel));
+    var query = "select * from ross.rosstable"
 
-    welcomeIndex = (welcomeIndex + 1) % welcomeAmount;
+    module.exports = {
+        name: 'testdbschema',
+        description: 'Check if database schema exists.',
+        execute(message, args){
+
+            dbClient.connect()
+            dbClient.query(query, (err, res) => {
+                console.log(err, res)
+
+                message.reply(res.rows[0].first_name)
+                dbClient.end()
+            })
+
+
+        }
+    }
 });
 
-client.on('message', message =>{
+
+discordclient.on('guildMemberUpdate', (oldMember, newMember) => {
+    const channel = newMember.guild.channels.cache.find(ch => ch.name === '🧮-main-chat-🧮');
+    let oldRoles = new Set(oldMember._roles)
+    let newRoles = new Set(newMember._roles)
+    let new_minus_old = new Set([...newRoles].filter(x => !oldRoles.has(x))).values().next().value
+    let welcomedroleid = oldMember.guild.roles.cache.find(i => i.name === "Welcomed").id;
+    if (new_minus_old === welcomedroleid) {
+        channel.send(welcomeMessages[welcomeIndex](newMember, channel));
+        welcomeIndex = (welcomeIndex + 1) % (welcomeMessages.length+1);
+    }
+});
+
+discordclient.on('message', message =>{
     if(!message.content.startsWith(prefix) || message.author.bot) return;
     
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -65,7 +106,7 @@ client.on('message', message =>{
     // Help Command!
     if (command == "help") {
         const helpcmd = require('./commands/help')
-        helpcmd.execute(message, client.commands, args);
+        helpcmd.execute(message, discordclient.commands, args);
         return true;
 
     }
@@ -74,14 +115,14 @@ client.on('message', message =>{
     if (command == "commands") {
         
         const commandscmd = require('./commands/commands')
-        commandscmd.execute(message, client.commands, args);
+        commandscmd.execute(message, discordclient.commands, args);
         return true;
     
     }
 
 
     /// Command block begins here
-    client.commands.some(function(cmd) {
+    discordclient.commands.some(function(cmd) {
 
         if (command == cmd.name)
         {
@@ -92,7 +133,7 @@ client.on('message', message =>{
   })
 })
 
-client.on('messageReactionAdd', async (reaction, user) => {
+discordclient.on('messageReactionAdd', async (reaction, user) => {
     // When we receive a reaction we check if the reaction is partial or not
   if (reaction.partial) await reaction.fetch()
   if (user.bot) return
@@ -125,7 +166,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 });
 
-client.on('messageReactionRemove', async (reaction, user) => {
+discordclient.on('messageReactionRemove', async (reaction, user) => {
 
     if (reaction.partial) await reaction.fetch();
     if (user.bot) return;
@@ -163,4 +204,4 @@ client.on('messageReactionRemove', async (reaction, user) => {
 
 const botToken = process.env.COSCYBOT
 // console.log(bot_token);
-client.login(botToken)
+discordclient.login(botToken)

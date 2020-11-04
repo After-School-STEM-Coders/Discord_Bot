@@ -3,7 +3,7 @@ const fs = require('fs');
 
 module.exports = {
     name: 'rules',
-    description: 'this rules!',
+    description: 'these are the rules!',
     execute(message, args){
 
         if (!args[0]) {
