@@ -95,7 +95,6 @@ discordclient.on('guildMemberAdd', member => {
            |                         v                                     |
            |                      Not New                                  |
            |                         |                                     |
-           |                         |                                     |
            v                         v                                     |
  +-----------------------+   +----------------+                            |
  |New user clicks Welcome|   |Bot welcomes the|                            |
@@ -108,10 +107,6 @@ Current implementation:
  +---------------------+
  |New user joins server+
  +---------------------+
-           |       
-           |
-           |
-           |
            |
            |
            v
