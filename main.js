@@ -84,7 +84,44 @@ discordclient.on('guildMemberAdd', member => {
     }
 });
 
+/*
+ Eventual Goal:
+                             +-------------------+           +--------------------------+
+ +---------------------+     |Bot checks whether |           |Bot creates new group PM  |
+ |New user joins server+---->+they have a brand  +--->New--->+message with new user and |
+ +---------------------+     |new discord account|           |@Mods for special greeting|
+           |                 +-------------------+           +--------------------------+
+           |                         |                                     |
+           |                         v                                     |
+           |                      Not New                                  |
+           |                         |                                     |
+           |                         |                                     |
+           v                         v                                     |
+ +-----------------------+   +----------------+                            |
+ |New user clicks Welcome|   |Bot welcomes the|                            |
+ |emoji, gaining the     +-->+new user in     +<---------------------------+
+ |"Welcomed" Role        |   |the main chat.  |
+ +-----------------------+   +----------------+
 
+Current implementation:
+
+ +---------------------+
+ |New user joins server+
+ +---------------------+
+           |       
+           |
+           |
+           |
+           |
+           |
+           v
+ +-----------------------+   +----------------+
+ |New user clicks Welcome|   |Bot welcomes the|
+ |emoji, gaining the     +-->+new user in     +
+ |"Welcomed" Role        |   |the main chat.  |
+ +-----------------------+   +----------------+
+
+ */
 discordclient.on('guildMemberUpdate', (oldMember, newMember) => {
     const welcomechannel = newMember.guild.channels.cache.find(ch => ch.name === '🧮-main-chat-🧮');
     const chooseroleschannel = newMember.guild.channels.cache.find(ch => ch.name === 'choose-your-roles');
