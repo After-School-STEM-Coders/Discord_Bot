@@ -143,7 +143,7 @@ discordclient.on('message', message =>{
 
 
             if (await promise) {
-                var query = `select points from "exp"."exp" where userid like \'${message.mentions.members.first()}\'`
+                var query = `select points from "exp"."exp" where userid like \'<@${message.mentions.members.first().id}>\'`
 
                 const get_current_points = new Client({
                 })
