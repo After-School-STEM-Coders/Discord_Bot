@@ -194,7 +194,7 @@ discordclient.on('message', message =>{
 
         if (command == cmd.name)
         {
-            cmd.execute(message, [args, dbvars]);
+            cmd.execute(message, args);
             return true;
 
         }
