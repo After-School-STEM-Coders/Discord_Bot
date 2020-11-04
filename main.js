@@ -127,7 +127,7 @@ discordclient.on('message', message =>{
 
         async function addexppoints() {
             var query = "INSERT INTO \"exp\".\"exp\" (userid,points)\n" +
-              `\tVALUES ('${message.mentions.members.first()}' ,'1')\n` +
+              `\tVALUES (\'<@${message.mentions.members.first().id}>\' ,'1')\n` +
               "\ton conflict (userid)\n" +
               "\tdo update set\n" +
               "\t  points = exp.\"exp\".points + 1;"
