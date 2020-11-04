@@ -86,13 +86,14 @@ discordclient.on('guildMemberAdd', member => {
 
 
 discordclient.on('guildMemberUpdate', (oldMember, newMember) => {
-    const channel = newMember.guild.channels.cache.find(ch => ch.name === '🧮-main-chat-🧮');
+    const welcomechannel = newMember.guild.channels.cache.find(ch => ch.name === '🧮-main-chat-🧮');
+    const chooseroleschannel = newMember.guild.channels.cache.find(ch => ch.name === 'choose-your-roles');
     let oldRoles = new Set(oldMember._roles)
     let newRoles = new Set(newMember._roles)
     let new_minus_old = new Set([...newRoles].filter(x => !oldRoles.has(x))).values().next().value
     let welcomedroleid = oldMember.guild.roles.cache.find(i => i.name === "Welcomed").id;
     if (new_minus_old === welcomedroleid) {
-        channel.send(welcomeMessages[welcomeIndex](newMember, channel));
+        welcomechannel.send(welcomeMessages[welcomeIndex](newMember, chooseroleschannel));
         welcomeIndex = (welcomeIndex + 1) % (welcomeMessages.length+1);
     }
 });
