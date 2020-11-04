@@ -14,19 +14,9 @@ module.exports = {
         const {Client} = require('pg')
 
         const check_if_table_exist = new Client({
-            user: dbvars.get('dbuser'),
-            host: dbvars.get('dbhost'),
-            database: dbvars.get('dbname'),
-            password: dbvars.get('dbpswd'),
-            port: dbvars.get('dbport'),
         })
 
         const create_table = new Client({
-            user: dbvars.get('dbuser'),
-            host: dbvars.get('dbhost'),
-            database: dbvars.get('dbname'),
-            password: dbvars.get('dbpswd'),
-            port: dbvars.get('dbport'),
         })
 
 

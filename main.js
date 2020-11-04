@@ -8,13 +8,6 @@ const util = require('util')
 
 const discordclient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
-// environment variables for database access
-var dbvars = new Discord.Collection
-dbvars.set('dbuser', process.env.DBUSER)
-dbvars.set('dbhost', process.env.DBHOST)
-dbvars.set('dbname', process.env.DBNAME)
-dbvars.set('dbpswd', process.env.DBPSWD)
-dbvars.set('dbport', process.env.DBPORT)
 
 /// prefix of commands feel free to change this
 const prefix = '+'
@@ -56,13 +49,6 @@ discordclient.once('ready' , () => {
 });
 
 discordclient.on('guildMemberAdd', member => {
-    const dbClient = new dbClient({
-        user: dbuser,
-        host: dbhost,
-        database: dbname,
-        password: dbpswd,
-        port: dbport
-    })
 
     var query = "select * from ross.rosstable"
 
@@ -135,11 +121,6 @@ discordclient.on('message', message =>{
         message.channel.send("One point for Gryffindor!");
 
         const add_a_point = new Client({
-            user: dbvars.get('dbuser'),
-            host: dbvars.get('dbhost'),
-            database: dbvars.get('dbname'),
-            password: dbvars.get('dbpswd'),
-            port: dbvars.get('dbport'),
         })
 
 
@@ -165,11 +146,6 @@ discordclient.on('message', message =>{
                 var query = `select points from "exp"."exp" where userid like \'${message.mentions.members.first()}\'`
 
                 const get_current_points = new Client({
-                    user: dbvars.get('dbuser'),
-                    host: dbvars.get('dbhost'),
-                    database: dbvars.get('dbname'),
-                    password: dbvars.get('dbpswd'),
-                    port: dbvars.get('dbport'),
                 })
 
                 get_current_points.connect()
