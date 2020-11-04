@@ -26,6 +26,11 @@ jobs:
         script: |
           touch ~/COSCYBOTStep1.txt
           export COSCYBOT=${{ secrets.COSCYBOT }}
+          export PGPASSWORD=${{ secrets.DBPSWD }}
+          export PGUSER=${{ secrets.DBUSER }}
+          export PGPORT=${{ secrets.DBPORT }}
+          export PGHOST=${{ secrets.DBHOST }}
+          export PGDATABASE=${{ secrets.DBNAME }}
           touch ~/COSCYBOTStep2.txt
           sh Discord_Bot/COSCYBOT/startup.sh
           touch ~/COSCYBOTStepsCompleted.txt
