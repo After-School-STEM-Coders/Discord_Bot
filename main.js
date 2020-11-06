@@ -1,6 +1,6 @@
 const { info } = require('console');
 const Discord = require('discord.js');
-const {welcomeMessages} = require('./commands/welcome');
+const {welcomeMessages} = require('./commands/manage/welcome');
 let welcomeIndex = Math.floor(Math.random() * welcomeMessages.length)
 const fs = require('fs');
 const {Client} = require('pg')
@@ -23,28 +23,65 @@ const prefix = '+'
 const path = require('path')
 
 discordclient.commands = new Discord.Collection()
+commandCategories = []
 
 // joining path of directory
 
 const directoryPath = path.join(__dirname, 'commands')
-// passing directoryPath and callback function
-fs.readdir(directoryPath, function (err, files) {
-// handling error
-    if (err) {
-    return console.log('Unable to scan directory: ' + err)
-    }
-  // listing all files using forEach
-    files.forEach(function (file) {
-        // Do whatever you want to do with the file
 
-    const command = require(`./commands/${file}`)
-    if(typeof command.name !== "undefined") {
-        discordclient.commands.set(command.name, command)
-    }
-  })
+const { readdirSync } = require('fs')
+
+const getDirectories = source =>
+  readdirSync(source, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+
+
+getDirectories(directoryPath).forEach(function(dir) {
+
+
+    // passing directoryPath and callback function
+    fs.readdir(directoryPath + "/" + dir, function (err, files) {
+        // handling error
+
+            var cat_name = dir
+            var cat_description = "No Description."
+            var cat_commands = []
+        
+            if (err) {
+            return console.log('Unable to scan directory: ' + err)
+            }
+
+            
+            if (fs.existsSync(`${directoryPath}/${dir}/.info`)) {
+                cat_description = fs.readFileSync(`${directoryPath}/${dir}/.info`, 'utf8')
+            }
+          
+            console.log(cat_description)
+            
+            // listing all files using forEach
+                files.filter(name => name.endsWith(".js")).forEach(function (file) {
+                    // Do whatever you want to do with the file
+            
+                const command = require(`./commands/${dir}/${file}`)
+                if(typeof command.name !== "undefined") {
+                    discordclient.commands.set(command.name, command)
+                    cat_commands.push({name: command.name, description: command.description})
+                    console.log(file)
+                }
+            })
+
+            commandCategories.push({
+                catName: cat_name,
+                catDescription: cat_description,
+                catCommands: cat_commands
+            })
+
+
+        })
+
+
 })
-
-
 
 
 
@@ -197,7 +234,7 @@ discordclient.on('message', message =>{
 
     // Help Command!
     if (command == "help") {
-        const helpcmd = require('./commands/help')
+        const helpcmd = require('./commands/utility/help')
         helpcmd.execute(message, discordclient.commands, args);
         return true;
 
@@ -206,23 +243,25 @@ discordclient.on('message', message =>{
         // Help Command!
     if (command == "commands") {
         
-        const commandscmd = require('./commands/commands')
-        commandscmd.execute(message, discordclient.commands, args);
-        return true;commands
+        const commandscmd = require('./commands/utility/commands')
+        commandscmd.execute(message, commandCategories, args);
+        return true;
     
     }
 
 
     /// Command block begins here
-    discordclient.commands.some(function(cmd) {
 
-        if (command == cmd.name)
-        {
-            cmd.execute(message, [args, dbvars]);
-            return true;
+    try {
 
-        }
-  })
+        discordclient.commands[command].execute(message, [args, dbvars])
+    
+    }catch(err){
+
+        message.reply("That command doesn't exist!")
+
+    }
+    
 })
 
 discordclient.on('messageReactionAdd', async (reaction, user) => {

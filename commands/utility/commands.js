@@ -35,7 +35,7 @@ module.exports = {
                 if (args[0] == cat.catName){
 
                     found = true
-                    embed.setTitle(cat.catName + " commands").setColor(0x0000ff).setDescription(cat.catDescription)
+                    embed.setTitle(cat.catName).setColor(0x0000ff).setDescription(cat.catDescription)
 
                     cat.catCommands.forEach(cmd =>  {
                         
