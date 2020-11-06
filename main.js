@@ -73,6 +73,8 @@ getDirectories(directoryPath).forEach(function(dir) {
 
         })
 
+        console.log(discordclient.commands)
+
 
 })
 
@@ -228,18 +230,13 @@ discordclient.on('message', message =>{
 
     /// Command block begins here
 
-<<<<<<< .merge_file_a01788
-    try {
-=======
-        if (command == cmd.name)
-        {
-            cmd.execute(message, args);
-            return true;
->>>>>>> .merge_file_a11204
 
-        discordclient.commands[command].execute(message, [args, dbvars])
+    try {
+
+        discordclient.commands.get(command).execute(message, args)
     
     }catch(err){
+        console.log(err)
 
         message.reply("That command doesn't exist!")
 
