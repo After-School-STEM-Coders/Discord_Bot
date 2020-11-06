@@ -3,7 +3,7 @@ const Discord = require('discord.js')
 module.exports = {
     name: 'exp',
     description: 'this shows experience!',
-    execute(message, args){
+    execute(message, args) {
 
         let dbvars = args[1];
 
@@ -13,22 +13,9 @@ module.exports = {
         const Discord = require('discord.js')
         const {Client} = require('pg')
 
-        const check_if_table_exist = new Client({
-            user: dbvars.get('dbuser'),
-            host: dbvars.get('dbhost'),
-            database: dbvars.get('dbname'),
-            password: dbvars.get('dbpswd'),
-            port: dbvars.get('dbport'),
-        })
+        const check_if_table_exist = new Client({})
 
-        const create_table = new Client({
-            user: dbvars.get('dbuser'),
-            host: dbvars.get('dbhost'),
-            database: dbvars.get('dbname'),
-            password: dbvars.get('dbpswd'),
-            port: dbvars.get('dbport'),
-        })
-
+        const create_table = new Client({})
 
 
         async function ifnotexistcreatetable() {
@@ -62,39 +49,70 @@ module.exports = {
                 })
             }
         }
-
         ifnotexistcreatetable()
 
+        async function getexppoints() {
+
+            var query = 'INSERT INTO "exp"."exp" (userid,points)\n' +
+              `\tVALUES (\'<@${message.author.id}>\' ,1)\n` +
+              '\ton conflict (userid)\n' +
+              '\tdo update set\n' +
+              '\t  points = "exp".points;'
+            const make_if_null = new Client({})
+            let promise2 = new Promise((resolve, reject) => {
+                make_if_null.connect()
+                make_if_null.query(query, (err, res) => {
+                    console.log(err, res)
+                    resolve(res)
+                    make_if_null.end()
+                })
+            })
 
 
-        let level = 1;
-        let experience = 50;
-        let nextLevelExperience = (level) * 100
-        let barPercentage =  experience / nextLevelExperience;
-        let numSquares = Math.floor(20 * barPercentage);
+            if (await promise2) {
+                var query = `select points from "exp"."exp" where userid like \'<@${message.author.id}>\'`
 
-        let bar = "";
+                const get_current_points = new Client({})
+
+                get_current_points.connect()
+                let current_points_promise = new Promise((resolve, reject) => {
+                    get_current_points.query(query, (err, res) => {
+                        console.log(err, res)
+                        resolve(res)
+                        get_current_points.end()
+                    })
+                })
+                let promise_return = await current_points_promise
+                let current_points = promise_return.rows[0].points
+
+                let level = Math.floor(current_points / 50)+1;
+                let experience = current_points;
+                let nextLevelExperience = Math.ceil((current_points+1) / 50) * 50
+                let barPercentage = experience / nextLevelExperience;
+                let numSquares = Math.floor(20 * barPercentage);
+
+                let bar = "";
 
 
-        for (let i = 0; i < 20; i++)
-        {
-            if(i < numSquares) {
-                bar += "🟩";
-            }
-            else{
-                bar += "⬜";
+                for (let i = 0; i < 20; i++) {
+                    if (i < numSquares) {
+                        bar += "🟩";
+                    } else {
+                        bar += "⬜";
+                    }
+                }
+                console.log(`${experience} / ${nextLevelExperience} xp`)
+                console.log(bar)
+                const embed = new Discord.MessageEmbed()
+                  .setAuthor(userName + " - Level " + level, image)
+                  .setColor(0x0000ff)
+                  .addField(`${experience} / ${nextLevelExperience} xp`, bar);
+
+
+                message.channel.send(embed);
             }
         }
-        console.log(`${experience} / ${nextLevelExperience} xp`)
-        console.log(bar)
-        const embed = new Discord.MessageEmbed()
-        .setAuthor(userName + " - Level " + level, image)
-        .setColor(0x0000ff)
-        .addField(`${experience} / ${nextLevelExperience} xp`, bar);
-        
-    
-        message.channel.send(embed);
+        getexppoints()
 
-
+        }
     }
-}
