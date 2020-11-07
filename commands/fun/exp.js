@@ -85,7 +85,7 @@ module.exports = {
                 let promise_return = await current_points_promise
                 let current_points = promise_return.rows[0].points
 
-                let level = Math.ceil(Math.log(current_points/5)/(Math.log(2))) + 1
+                let level = Math.max(1, Math.ceil(Math.log(current_points/5)/(Math.log(2))) + 1)
                 let experience = current_points;
                 let nextLevelExperience = (5* Math.pow(2, level))
                 let barPercentage = experience / nextLevelExperience;
