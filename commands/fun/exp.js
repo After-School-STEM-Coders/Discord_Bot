@@ -87,7 +87,7 @@ module.exports = {
 
                 let level = Math.floor((Math.log(Math.max(3, current_points)/5) / Math.log(2))+2)
                 let experience = current_points;
-                let nextLevelExperience = (5* Math.pow(2, level))
+                let nextLevelExperience = (5* Math.pow(2, level - 1))
                 let barPercentage = experience / nextLevelExperience;
                 let numSquares = Math.floor(20 * barPercentage);
 
