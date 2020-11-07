@@ -1,12 +1,14 @@
-const { info } = require('console');
-const Discord = require('discord.js');
-const {welcomeMessages} = require('./commands/manage/welcome');
+const { info } = require('console')
+const Discord = require('discord.js')
+const {welcomeMessages} = require('./commands/manage/welcome')
 let welcomeIndex = Math.floor(Math.random() * welcomeMessages.length)
 const fs = require('fs');
 const {Client} = require('pg')
+const PGConnection = require('./src/database')
 const util = require('util')
 
-const discordclient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+const discordclient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
+const db = new PGConnection()
 
 
 /// prefix of commands feel free to change this
@@ -73,8 +75,6 @@ getDirectories(directoryPath).forEach(function(dir) {
 
         })
 
-        console.log(discordclient.commands)
-
 
 })
 
@@ -82,9 +82,8 @@ getDirectories(directoryPath).forEach(function(dir) {
 
 
 discordclient.once('ready' , () => {
+    db.connect()
     console.log('Jarvis is Online!');
-
-
 });
 
 discordclient.on('guildMemberAdd', member => {
@@ -159,50 +158,11 @@ discordclient.on('message', message =>{
     if ((message.mentions.members.size > 0) && (message.cleanContent.slice(-2) === "++")) {
         message.channel.send("One point for Gryffindor!");
 
-        const add_a_point = new Client({
+        db.addexppoints(message.mentions.members.first().user.id, 1).then(points =>{
+
+            message.channel.send(`${message.mentions.members.first().user.username} has ${points} points!`)
+
         })
-
-
-
-        async function addexppoints() {
-            var query = "INSERT INTO \"exp\".\"exp\" (userid,points)\n" +
-              `\tVALUES (\'<@${message.mentions.members.first().id}>\' ,'1')\n` +
-              "\ton conflict (userid)\n" +
-              "\tdo update set\n" +
-              "\t  points = exp.\"exp\".points + 1;"
-
-            let promise = new Promise((resolve, reject) => {
-                add_a_point.connect()
-                add_a_point.query(query, (err, res) => {
-                    console.log(err, res)
-                    resolve(res)
-                    add_a_point.end()
-                })
-            })
-
-
-            if (await promise) {
-                var query = `select points from "exp"."exp" where userid like \'<@${message.mentions.members.first().id}>\'`
-
-                const get_current_points = new Client({
-                })
-
-                get_current_points.connect()
-                let current_points_promise = new Promise( (resolve, reject) => {
-                    get_current_points.query(query, (err, res) => {
-                        console.log(err, res)
-                        resolve(res)
-                        get_current_points.end()
-                    })
-                })
-                let promise_return = await current_points_promise
-                let current_points = promise_return.rows[0].points
-                message.channel.send(`${message.mentions.members.first().user.username} has ${current_points} points!`);
-
-            }
-        }
-
-        addexppoints()
     }
 
     if(!message.content.startsWith(prefix) || message.author.bot) return;
