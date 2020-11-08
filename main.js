@@ -62,26 +62,6 @@ discordclient.once('ready', () => {
   console.log('Jarvis is Online!')
 })
 
-discordclient.on('guildMemberAdd', member => {
-
-  var query = 'select * from ross.rosstable'
-
-  module.exports = {
-    name: 'testdbschema',
-    description: 'Check if database schema exists.',
-    execute (message, args) {
-
-      dbClient.connect()
-      dbClient.query(query, (err, res) => {
-        console.log(err, res)
-
-        message.reply(res.rows[0].first_name)
-        dbClient.end()
-      })
-    }
-  }
-})
-
 fs.readdir(path.join(__dirname, 'events'), function (err, files) {
   if (err) return console.error(err)
   files.forEach((file) => {
@@ -95,31 +75,6 @@ fs.readdir(path.join(__dirname, 'events'), function (err, files) {
       emitter[once ? 'once' : 'on'](event, (...args) => eventFunction.run(...args))
     } catch (error) {
       console.error(error.stack)
-    }
-  })
-})
-
-discordclient.on('messageReactionAdd', async (reaction, user) => {
-  // When we receive a reaction we check if the reaction is partial or not
-  if (reaction.partial) await reaction.fetch()
-  if (user.bot) return
-  if (!reaction.message.guild) return
-
-  // Get rules channel and message information for rules interaction
-  fs.readFile(__dirname + '/data/rules.txt', 'utf8', function (err, data) {
-
-    let info = data.split('\n')
-
-    if (reaction.message.id == info[0] && reaction.emoji.name == '👍') {
-      reaction.message.guild.roles.fetch(info[1].substring(3, info[1].length - 1)).then(roleassigned => {
-
-        reaction.message.guild.members.fetch(user.id).then(member => {
-
-          member.roles.add(roleassigned)
-          reaction.message.channel.send(`Thank you for reacting, ${user}. The role ${roleassigned} has been assigned to you!`)
-
-        })
-      })
     }
   })
 })
