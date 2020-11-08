@@ -142,6 +142,7 @@ Current implementation:
 fs.readdir('./events/', (err, files) => {
     if (err) return console.error(err);
     files.forEach((file) => {
+        console.log(__dirname)
         const eventFunction = require(`./events/${file}`);
         if (eventFunction.disabled) return;
         const event = eventFunction.event || file.split('.')[0];
