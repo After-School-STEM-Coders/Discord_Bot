@@ -1,7 +1,5 @@
 const { info } = require('console')
 const Discord = require('discord.js')
-const {welcomeMessages} = require('./commands/manage/welcome')
-let welcomeIndex = Math.floor(Math.random() * welcomeMessages.length)
 const fs = require('fs');
 const {Client} = require('pg')
 const PGConnection = require('./src/database')
@@ -141,17 +139,21 @@ Current implementation:
  +-----------------------+   +----------------+
 
  */
-discordclient.on('guildMemberUpdate', (oldMember, newMember) => {
-    const welcomechannel = newMember.guild.channels.cache.find(ch => ch.name === '🧮-main-chat-🧮');
-    const chooseroleschannel = newMember.guild.channels.cache.find(ch => ch.name === 'choose-your-roles');
-    let oldRoles = new Set(oldMember._roles)
-    let newRoles = new Set(newMember._roles)
-    let new_minus_old = new Set([...newRoles].filter(x => !oldRoles.has(x))).values().next().value
-    let welcomedroleid = oldMember.guild.roles.cache.find(i => i.name === "Welcomed").id;
-    if (new_minus_old === welcomedroleid) {
-        welcomechannel.send(welcomeMessages[welcomeIndex](newMember, chooseroleschannel));
-        welcomeIndex = (welcomeIndex + 1) % (welcomeMessages.length+1);
-    }
+fs.readdir('./events/', (err, files) => {
+    if (err) return console.error(err);
+    files.forEach((file) => {
+        const eventFunction = require(`./events/${file}`);
+        if (eventFunction.disabled) return;
+        const event = eventFunction.event || file.split('.')[0];
+        const emitter = (typeof eventFunction.emitter === 'string' ? discordclient[eventFunction.emitter] : eventFunction.emitter) || discordclient;
+        const { once } = eventFunction;
+        try {
+            emitter[once ? 'once' : 'on'](event, (...args) => eventFunction.run(...args));
+        }
+        catch (error) {
+            console.error(error.stack);
+        }
+    });
 });
 
 discordclient.on('message', message =>{
