@@ -26,7 +26,7 @@ module.exports = {
                 let role = args[0];
                 let info = id + "\n" + role;
     
-                fs.writeFile(__dirname + '/../data/rules.txt', info, (err) => {
+                fs.writeFile(__dirname + '../../data/rules.txt', info, (err) => {
                     if (err) throw err;
                     console.log('The file has been saved!');
                   });
