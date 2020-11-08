@@ -139,6 +139,7 @@ Current implementation:
  +-----------------------+   +----------------+
 
  */
+console.log(__dirname)
 fs.readdir('./events/', (err, files) => {
     if (err) return console.error(err);
     files.forEach((file) => {
