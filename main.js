@@ -5,12 +5,11 @@ const {Client} = require('pg')
 const PGConnection = require('./src/database')
 const util = require('util')
 
-const discordclient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
+const discordclient = global.discordclient = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 const db = new PGConnection()
 
 
-/// prefix of commands feel free to change this
-const prefix = '+'
+
 
 // requiring path and fs modules
 const path = require('path')
@@ -31,31 +30,22 @@ const getDirectories = source =>
 
 
 getDirectories(directoryPath).forEach(function(dir) {
-
-
     // passing directoryPath and callback function
     fs.readdir(directoryPath + "/" + dir, function (err, files) {
         // handling error
-
             var cat_name = dir
             var cat_description = "No Description."
             var cat_commands = []
-        
             if (err) {
             return console.log('Unable to scan directory: ' + err)
             }
-
-            
             if (fs.existsSync(`${directoryPath}/${dir}/.info`)) {
                 cat_description = fs.readFileSync(`${directoryPath}/${dir}/.info`, 'utf8')
             }
-          
             console.log(cat_description)
-            
             // listing all files using forEach
                 files.filter(name => name.endsWith(".js")).forEach(function (file) {
                     // Do whatever you want to do with the file
-            
                 const command = require(`./commands/${dir}/${file}`)
                 if(typeof command.name !== "undefined") {
                     discordclient.commands.set(command.name, command)
@@ -63,17 +53,12 @@ getDirectories(directoryPath).forEach(function(dir) {
                     console.log(file)
                 }
             })
-
             commandCategories.push({
                 catName: cat_name,
                 catDescription: cat_description,
                 catCommands: cat_commands
             })
-
-
         })
-
-
 })
 
 
@@ -106,40 +91,6 @@ discordclient.on('guildMemberAdd', member => {
     }
 });
 
-/*
- Eventual Goal:
-                             +-------------------+           +--------------------------+
- +---------------------+     |Bot checks whether |           |Bot creates new group PM  |
- |New user joins server+---->+they have a brand  +--->New--->+message with new user and |
- +---------------------+     |new discord account|           |@Mods for special greeting|
-           |                 +-------------------+           +--------------------------+
-           |                         |                                     |
-           |                         v                                     |
-           |                      Not New                                  |
-           |                         |                                     |
-           v                         v                                     |
- +-----------------------+   +----------------+                            |
- |New user clicks Welcome|   |Bot welcomes the|                            |
- |emoji, gaining the     +-->+new user in     +<---------------------------+
- |"Welcomed" Role        |   |the main chat.  |
- +-----------------------+   +----------------+
-
-Current implementation:
-
- +---------------------+
- |New user joins server+
- +---------------------+
-           |
-           |
-           v
- +-----------------------+   +----------------+
- |New user clicks Welcome|   |Bot welcomes the|
- |emoji, gaining the     +-->+new user in     +
- |"Welcomed" Role        |   |the main chat.  |
- +-----------------------+   +----------------+
-
- */
-
 fs.readdir(path.join(__dirname, 'events'), function (err, files) {
     if (err) return console.error(err);
     files.forEach((file) => {
@@ -158,55 +109,7 @@ fs.readdir(path.join(__dirname, 'events'), function (err, files) {
     });
 });
 
-discordclient.on('message', message =>{
-    if ((message.mentions.members.size > 0) && (message.cleanContent.slice(-2) === "++")) {
-        message.channel.send("One point for Gryffindor!");
 
-        db.addexppoints(message.mentions.members.first().user.id, 1).then(points =>{
-
-            message.channel.send(`${message.mentions.members.first().user.username} has ${points} points!`)
-
-        })
-    }
-
-    if(!message.content.startsWith(prefix) || message.author.bot) return;
-    
-    const args = message.content.slice(prefix.length).split(/ +/);
-    const command = args.shift().toLowerCase();
-
-    // Help Command!
-    if (command == "help") {
-        const helpcmd = require('./commands/utility/help')
-        helpcmd.execute(message, discordclient.commands, args);
-        return true;
-
-    }
-
-        // Help Command!
-    if (command == "commands") {
-        
-        const commandscmd = require('./commands/utility/commands')
-        commandscmd.execute(message, commandCategories, args);
-        return true;
-    
-    }
-
-
-    /// Command block begins here
-
-
-    try {
-
-        discordclient.commands.get(command).execute(message, args)
-    
-    }catch(err){
-        console.log(err)
-
-        message.reply("That command doesn't exist!")
-
-    }
-    
-})
 
 discordclient.on('messageReactionAdd', async (reaction, user) => {
     // When we receive a reaction we check if the reaction is partial or not
