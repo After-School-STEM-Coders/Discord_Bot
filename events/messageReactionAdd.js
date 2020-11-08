@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = {
   run: async (reaction, user) => {
     // When we receive a reaction we check if the reaction is partial or not

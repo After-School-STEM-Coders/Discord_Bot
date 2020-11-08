@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = {
   run: async (reaction, user) => {
     if (reaction.partial) await reaction.fetch()
