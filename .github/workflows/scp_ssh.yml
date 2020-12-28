@@ -14,7 +14,7 @@ jobs:
         port: ${{ secrets.PORT }}
         key: ${{ secrets.KEY }}
         source: "*"
-        target: "/home/ubuntu/Discord_Bot/COSCYBOT"
+        target: "/home/ubuntu/Discord_Bot/loggingbranch"
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
       with:
@@ -24,13 +24,13 @@ jobs:
         key: ${{ secrets.KEY }}
         
         script: |
-          touch ~/COSCYBOTStep1.txt
-          export COSCYBOT=${{ secrets.COSCYBOT }}
+          touch ~/LoggingBranchStep1.txt
+          export COSCYBOT=${{ secrets.LOGGINGBRANCH }}
           export PGPASSWORD=${{ secrets.DBPSWD }}
           export PGUSER=${{ secrets.DBUSER }}
           export PGPORT=${{ secrets.DBPORT }}
           export PGHOST=${{ secrets.DBHOST }}
           export PGDATABASE=${{ secrets.DBNAME }}
-          touch ~/COSCYBOTStep2.txt
-          sh Discord_Bot/COSCYBOT/startup.sh
-          touch ~/COSCYBOTStepsCompleted.txt
+          touch ~/LoggingBranchStep2.txt
+          sh Discord_Bot/loggingbranch/startup.sh
+          touch ~/LoggingBranchStepsCompleted.txt
