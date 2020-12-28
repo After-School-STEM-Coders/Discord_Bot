@@ -1,6 +1,7 @@
 #!/bin/bash
-if pgrep -f "node.*COSCY"
- then kill "$(pgrep -f "node.*COSCY")"
+if pgrep -f "node.*loggingbranch"
+ then kill "$(pgrep -f "node.*loggingbranch")"
 fi
 sleep 5
-node ~/Discord_Bot/COSCYBOT/main.js &
+node ~/Discord_Bot/loggingbranch/main.js 2>&1 | multilog t s1048576 ./logs/ 2>&1 &
+
