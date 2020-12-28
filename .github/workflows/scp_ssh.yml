@@ -25,7 +25,7 @@ jobs:
         
         script: |
           touch ~/COSCYBOTStep1.txt
-          export COSCYBOT=${{ secrets.COSCYBOT }}
+          export COSCYBOT=${{ secrets.ROLESBRANCH }}
           export PGPASSWORD=${{ secrets.DBPSWD }}
           export PGUSER=${{ secrets.DBUSER }}
           export PGPORT=${{ secrets.DBPORT }}
