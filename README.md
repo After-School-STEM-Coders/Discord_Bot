@@ -15,6 +15,70 @@ Secrets stored in Github used for these scripts:
  - NARVIS - Discord bot API key for bot #3, (any branch under active development) associated Discord user is on **test** server.
  - xARVIS - Feel free to add additional API keys as needed. Ideally we'd have one per branch.
 
+## Creating a new branch:
+
+Generally a new branch is associated with a new Discord bot account/username for testing purposes. To get the new branch its own username, complete the following steps:
+
+ 1. Go to the Discord Developer Portal ( https://discord.com/developers/applications/ ) and create a "New Application". Give it a relevant name that lets you identify which application and which branch it is. 
+ 2. Click the "Bot" tab.
+ 3. Click the "Add Bot" button. Confirm by clicking the "Yes, do it!" button.
+ 4. Toggle the "Presence Intent" to the ON position.
+ 5. Toggle the "Server Members Intent" to the ON position.
+ 6. Click the green "Save Changes" button at the bottom of the window.
+ 7. In the sidebar, click the OAuth2 tab.
+ 8. Toggle (check ✅) the "bot" flag to  in the Scopes tool.
+ 9. Toggle (check ✅) the "Administrator"  flag in the "Bot Permissions" tool.
+ 10. Click the "Copy" button in the Scopes tool.
+ 11. Paste that link into a new tab.
+ 12. Add the bot to one of your testing servers.
+ Repeat steps 11 and 12 until it is added to all relevant testing servers.
+ 13. Again in the "Bot" tab of the Discord Developer Portal sidebar for your selected app, click the "Click to Reveal Token" link and/or the "Copy" button underneath Token, and copy the API token for your bot.
+ 14. At https://github.com/Super-COSC-Kids/Discord_Bot, click "Settings" near the top repository navigation menu.
+ 15. In the sidebar navigation, click "Secrets".
+ 16. Near the top of the main window pane, click the "New repository secret" button.
+ 17. Name your new secret something in all CAPS (no spaces) which is relevant to the branch. For example "LOGGINGBRANCH".
+ 18. Paste the API token into the "Value" field.
+ 19. Click the "Add secret" button.
+ 20. Create a new branch, ideally named after the feature you envision adding, or the bug you are working to fix.
+ 21. Edit the readme.md at the root of the branch with the following format:
+      ```md
+        # [name of branch] branch
+    
+        ## What is the intention for the [feature/bug]?
+        
+         [Detailed explanation of what "done" looks like for this branch]
+        
+        ## Primary maintainers of the roles_command branch:
+        
+         - [Your name here]
+         - [Collaborator names]
+         
+        ## Todo list:
+       
+         - [Specific Task #1]
+         - [Specific Task #2]
+         - [Specific Task #3]
+        ``` 
+ 22. Currently all the branches deploy to `~/Discord_Bot/[branchdir]`. Determine a name for `branchdir` such as `~/Discord_Bot/loggingbot`.
+ 23. Edit `startup.sh` to change `COSCY` (on lines 2 and 3), and `node ~/Discord_Bot/COSCYBOT/main.js &` on line 6 to your `[branchdir]`. Example:
+      ```sh
+      #!/bin/bash
+      if pgrep -f "node.*loggingbot"
+       then kill "$(pgrep -f "node.*loggingbot")"
+      fi
+      sleep 5
+      node ~/Discord_Bot/loggingbot/main.js &
+      ```
+ 24. Push this new branch (with edited `./readme.md` and `./shartup.sh`) to the GitHub repo.
+ 25. Using the GitHub website UI, navigate to `https://github.com/Super-COSC-Kids/Discord_Bot/blob/[branchname]/.github/workflows/scp_ssh.yml` (with your branch replacing the `[branchname]` placeholder in this URL)
+ 26. Edit this file using the GitHub website UI:
+     - On line 17, replace `target: "COSCYBOT"` with your `[branchdir]`.
+     - On line 28, replace `{{ secrets.COSCYBOT }}` with the name of the secret you created in step 17, ex: `export COSCYBOT=${{ secrets.LOGGINGBRANCH }}`
+     - On line 35, replace `sh Discord_Bot/COSCYBOT/startup.sh` with the directory you specified in step 22/23. Ex: `sh Discord_Bot/loggingbot/startup.sh`
+     - On lines 27, 34, and 36, replace `COSCYBOT` with a name you'll recognize for this branch. These files help determine if there was an error generated in the CD pipeline.
+ 27. Commit these changes, click "Actions" in the top repo navigation bar, and watch the deployment.
+ 28. Go to your test server in Discord and send the message "+identity" to see if your new branch is running properly.
+
 ## Cattle, Not Pets:
 
 Feel free to take your server out back if necessary. To stand up a new server:
@@ -33,7 +97,7 @@ sudo su - postgres -c "psql -c 'ALTER USER {USERNAME} SUPERUSER'"
 
 3. Re-assign the static Elastic IP address from the old server to the new one.
 
-4. Make a new commit, ensure that the new bot builds on the new server and works.
+4. Push a new commit, ensure that the new bot builds on the new server and works.
 
 5. Kill the old server.
 
