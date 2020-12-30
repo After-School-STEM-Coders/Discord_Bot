@@ -8,12 +8,15 @@
  
  There is a risk that long-lived instances may create large log files. Canonical ways to handle this include:
  
-  - logrotate(8)
-  - cyclog
-  - multilog (daemontools)
+  - `systemd` / `journald`
+  - `logrotate`(8)
+  - `cyclog`
+  - `multilog` (daemontools)
   
-  I've chosen not to go with logrotate because it requires cron jobs, so it's possible that a runaway process will write a truly unexpected amount of data in the time window allowed.
-  cyclog and multilog both seem simple and exactly what we need, but cyclog is not readily available in apt-get.
+  I've chosen not to go with `journald` because it cannot guarantee that it will respect maximum storage limits. https://github.com/systemd/systemd/issues/18103 While this isn't necessarily an issue for us, it feels like bad practice in a low cost (read: resource-constrained) environment other options serve us well.
+  
+  I've chosen not to go with `logrotate` because it requires `cron` jobs, so it's possible that a runaway process will write a truly unexpected amount of data in the time window allowed.
+  `cyclog` and `multilog` both seem simple and exactly what we need, but `cyclog` is not readily available in apt-get.
   
   Therefore `multilog` appears to be a good choice. This changes the initial server setup to:
   
@@ -32,11 +35,14 @@
   Then the command to run the discord bot becomes:
   ```node main.js 2>&1 | multilog t s1048576 ./logs/```
  
-  ## Primary maintainers of the roles_command branch:
+  To read the logs with local timezone, run:
+  ```cat [path_to_log_file] | tai64nlocal```
+ 
+  ## Primary maintainers of the logging branch:
   
    - @rckoepke
    
-  ## Todo list:
+  ## Notes:
  
-   - Investigate potentially using `systemd` / `journald` instead of `multilog`.
+
    
