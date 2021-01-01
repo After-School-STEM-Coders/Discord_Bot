@@ -1,5 +1,5 @@
 well, if I ever get off my lazy butt it would be nice to have:
- - a running log file so we know why it keeps crashing
+ - ✅ ~~a running log file so we know why it keeps crashing~~
  - ability to strip roles in bulk at the end of each semester (force people back to welcome screen)
  - mass delete: "clear last 100 comments"
  - role menu system like #choose-your-roles but supporting more roles than YAGPDB can.
