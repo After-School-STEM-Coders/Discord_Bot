@@ -86,13 +86,15 @@ Feel free to take your server out back if necessary. To stand up a new server:
 1. Create an EC2 Instance based on Amazon's ubuntu image. Current one we're using is ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20200907 (ami-07efac79022b86107) although given the lack of custom configuration, I'd strongly suspect that you will be able to use the latest version for a long time to come.
 
 2. Log into the server and run the following instructions:
-```sudo apt-get install npm
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt-get install -y nodejs
-npm install discord.js
-sudo apt-get --yes install postgresql
-sudo -u postgres createuser {USERNAME}
-sudo su - postgres -c "psql -c 'ALTER USER {USERNAME} SUPERUSER'"
+```sh
+  sudo apt-get install npm
+  curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+  npm install discord.js
+  sudo apt-get --yes install postgresql
+  sudo -u postgres createuser {USERNAME}
+  sudo su - postgres -c "psql -c 'ALTER USER {USERNAME} SUPERUSER'"
+  sudo apt-get install daemontools
 ```
 
 3. Re-assign the static Elastic IP address from the old server to the new one.
@@ -156,7 +158,20 @@ Or IntelliJ's similar system (only available on Professional licenses!) The foll
 
 Both of these allow your code to run on the remote machine, but gives you the same workflow you're used to on your own computer. It does everything over SCP and SSH but feels exactly like its locally happening on your own computer. It will give you a more consistent experience between dev and prod.
 
+## Logs
+
+output from console.log() and error output (such as occurs when the application crashes) are stored in files for future reference to help with debugging. 
+
+To read the logs with local timezone, run:
+  ```cat [path_to_log_file] | tai64nlocal```
+
+Generally the path to the most recent log file is `~/Discord_Bot/[branch_of_interest]/logs/current` so you would run:
+
+```cat ~/Discord_Bot/COSCYBOT/logs/current | tai64nlocal``` to read the most recent logfile for the main branch.
+
+The command to run the discord bot with logging is:
+```node main.js 2>&1 | multilog t s1048576 ./logs/```
+
 ## Merge often
 
-Try to close up branches as soon as possible. Merge in any reasonably finalized changes, then rebranch again immediately and continue hacking.
-
+Try to close up branches as soon as possible. Merge in any reasonably finalized changes, then rebranch again immediately and continue developing.
