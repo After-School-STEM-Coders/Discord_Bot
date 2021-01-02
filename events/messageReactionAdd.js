@@ -1,23 +1,25 @@
 const fs = require('fs');
 
 module.exports = {
-  run: async (reaction, user) => {
+  run: async (reaction, whoreacted) => {
     // When we receive a reaction we check if the reaction is partial or not
-    if (reaction.partial) await reaction.fetch()
-    if (user.bot) return
-    if (!reaction.message.guild) return
-
-    // Get rules channel and message information for rules interaction
-    fs.readFile(__dirname + '../data/rules.txt', 'utf8', function (err, data) {
-      let info = data.split('\n')
-      if (reaction.message.id == info[0] && reaction.emoji.name == '👍') {
-        reaction.message.guild.roles.fetch(info[1].substring(3, info[1].length - 1)).then(roleassigned => {
-          reaction.message.guild.members.fetch(user.id).then(member => {
-            member.roles.add(roleassigned)
-            reaction.message.channel.send(`Thank you for reacting, ${user}. The role ${roleassigned} has been assigned to you!`)
-          })
-        })
+    if (reaction.partial) {
+      // If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
+      try {
+        await reaction.fetch();
+      } catch (error) {
+        console.error('Something went wrong when fetching the message: ', error);
+        // Return as `reaction.message.id` may be undefined/null
+        return;
       }
-    })
+    }
+    if (reaction.message.id === "794493423495282730") { //change this ID to match special Welcome message
+      let role = reaction.message.guild.roles.cache.find((role) => role.name === 'Welcomed')
+      let guildmember = await reaction.message.guild.members.fetch(whoreacted.id)//.then(GuildMember => GuildMember)
+      console.log(`Welcomed ${guildmember.user.username}`) // TODO: Change this to record DiscordID rather than username.
+      guildmember.roles.add(role).then().catch(console.error)
+    }
+    let mymessage = await reaction.message.channel.messages.fetch(reaction.message.id)
+    console.log(mymessage)
   }
 }
