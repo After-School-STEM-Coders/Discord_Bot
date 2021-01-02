@@ -13,11 +13,18 @@ module.exports = {
         return;
       }
     }
-    if (reaction.message.id === "794493423495282730") { //change this ID to match special Welcome message
+    if (reaction.message.id === "794795306242801674") { //change this ID to match special Welcome message
       let role = reaction.message.guild.roles.cache.find((role) => role.name === 'Welcomed')
       let guildmember = await reaction.message.guild.members.fetch(whoreacted.id)//.then(GuildMember => GuildMember)
-      console.log(`Welcomed ${guildmember.user.username}`) // TODO: Change this to record DiscordID rather than username.
-      guildmember.roles.add(role).then().catch(console.error)
+
+      const UserPromisesArray = reaction.message.reactions.cache.map(reaction => reaction.users.fetch())
+      AllUsersWhoReacted = new Set()
+      await Promise.all(UserPromisesArray).then(UserPromise => UserPromise.map(UserArray => UserArray.forEach(function (value, key, map) {AllUsersWhoReacted.add(value.userid)})))
+      if (AllUsersWhoReacted.has(guildmember.user.userid) === false) {
+        guildmember.roles.remove(role).then().catch(console.error)
+        console.log(`Un-welcomed ${guildmember.user.username}`) // TODO: Change this to record DiscordID rather than username.
+      }
+
     }
   }
 }
