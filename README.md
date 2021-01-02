@@ -175,3 +175,12 @@ The command to run the discord bot with logging is:
 ## Merge often
 
 Try to close up branches as soon as possible. Merge in any reasonably finalized changes, then rebranch again immediately and continue developing.
+
+## Features:
+
+### Welcome roles:
+
+You can post a welcome message and copy the message ID, paste the message ID into ```js
+   if (reaction.message.id === "794795306242801674") { //change this ID to match special Welcome message``` on line 17 of `messageReactionAdd.js` as well as line 16 of `messageReactionRemove.js`
+
+This will give the role "@Welcomed" to anyone who uses an emoji reaction on that welcome message. If, and only if, the user removes all emoji reactions (not just one, but all of them), the bot will remove "@Welcomed" from that user.
