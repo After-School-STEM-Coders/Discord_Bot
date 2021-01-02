@@ -13,13 +13,15 @@ module.exports = {
         return;
       }
     }
-    if (reaction.message.id === "794493423495282730") { //change this ID to match special Welcome message
+    if (reaction.message.id === "794773215444205588") { //change this ID to match special Welcome message
       let role = reaction.message.guild.roles.cache.find((role) => role.name === 'Welcomed')
       let guildmember = await reaction.message.guild.members.fetch(whoreacted.id)//.then(GuildMember => GuildMember)
       console.log(`Welcomed ${guildmember.user.username}`) // TODO: Change this to record DiscordID rather than username.
       guildmember.roles.add(role).then().catch(console.error)
     }
-    let mymessage = await reaction.message.channel.messages.fetch(reaction.message.id)
-    console.log(mymessage)
+
+    const myarrays = reaction.message.reactions.cache.map(reaction => reaction.users.fetch())
+    await Promise.all(myarrays).then((item => console.log(item)))
+    console.log("success?")
   }
 }
