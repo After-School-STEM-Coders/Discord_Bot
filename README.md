@@ -94,7 +94,7 @@ Feel free to take your server out back if necessary. To stand up a new server:
   sudo apt-get --yes install postgresql
   sudo -u postgres createuser {USERNAME}
   sudo su - postgres -c "psql -c 'ALTER USER {USERNAME} SUPERUSER'"
-  sudo apt-get install daemontools
+  sudo apt-get install -y daemontools
 ```
 
 3. Re-assign the static Elastic IP address from the old server to the new one.
