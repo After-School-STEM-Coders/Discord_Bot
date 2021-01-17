@@ -24,13 +24,18 @@ jobs:
         key: ${{ secrets.KEY }}
         
         script: |
-          touch ~/COSCYBOTStep1.txt
+          mkdir -p ~/setuplogs/coscybot/
+          rm -r ~/setuplogs/coscybot/*
+          touch ~/setuplogs/coscybot/coscybotstep1.txt
           export COSCYBOT=${{ secrets.COSCYBOT }}
           export PGPASSWORD=${{ secrets.DBPSWD }}
           export PGUSER=${{ secrets.DBUSER }}
           export PGPORT=${{ secrets.DBPORT }}
           export PGHOST=${{ secrets.DBHOST }}
           export PGDATABASE=${{ secrets.DBNAME }}
-          touch ~/COSCYBOTStep2.txt
+          touch ~/setuplogs/coscybot/coscybotstep2.txt
+          sudo su - postgres -c "psql -c \"ALTER ROLE ${{ secrets.DBUSER }} WITH PASSWORD '${{ secrets.DBPSWD }}'\""
+          touch ~/setuplogs/coscybot/coscybotstep3.txt
           sh Discord_Bot/COSCYBOT/startup.sh
-          touch ~/COSCYBOTStepsCompleted.txt
+          touch ~/setuplogs/coscybot/coscybotstepscompleted.txt
+
